@@ -1,0 +1,7 @@
+node_modules
+dist
+.vercel-tmp
+*.log
+*.pid
+.DS_Store
+.vercel
