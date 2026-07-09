@@ -1,6 +1,7 @@
 import { Routes, Route } from 'react-router-dom'
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
+import ChatBot from './components/ChatBot'
 import LandingPage from './pages/LandingPage'
 import ProgramCatalog from './pages/ProgramCatalog'
 import ProgramProfile from './pages/ProgramProfile'
@@ -21,6 +22,7 @@ function App() {
         </Routes>
       </main>
       <Footer />
+      <ChatBot />
     </div>
   )
 }
