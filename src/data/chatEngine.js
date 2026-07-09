@@ -1,34 +1,32 @@
 import { alumni } from '../data/alumni'
 import { programs } from '../data/programs'
 
-// Knowledge base built from alumni data
 const knowledgeBase = [
-  // Program-specific knowledge
   {
     keywords: ['cse', 'computer science', 'cs', 'coding', 'software'],
-    programFilter: ['cse-iit-delhi', 'cse-bits-pilani', 'cse-nit-trichy'],
-    response: (matches) => {
-      const alumniMatches = alumni.filter(a => 
-        ['cse-iit-delhi', 'cse-bits-pilani', 'cse-nit-trichy'].includes(a.programId)
-      )
-      const reviews = alumniMatches.filter(a => a.review).slice(0, 3)
-      let msg = "**Computer Science** is offered at 3 institutes on AlumBridge:\n\n"
-      msg += "1. **IIT Delhi** - B.Tech, Avg package 22 LPA, Cutoff: Top 100 AIR\n"
-      msg += "2. **BITS Pilani** - B.E., Avg package 16 LPA, BITSAT 350+\n"
-      msg += "3. **NIT Trichy** - B.Tech, Avg package 12 LPA, JEE Main 98-99.5 percentile\n\n"
+    response: () => {
+      let msg = "**Computer Science** programs on AlumBridge span 6 countries:\n\n"
+      msg += "🇮🇳 **India:**\n"
+      msg += "1. **IIT Delhi** — B.Tech, Avg 22 LPA, Top 100 AIR\n"
+      msg += "2. **BITS Pilani** — B.E., Avg 16 LPA, BITSAT 350+\n"
+      msg += "3. **NIT Trichy** — B.Tech, Avg 12 LPA, JEE Main 98+\n\n"
+      msg += "🌍 **International:**\n"
+      msg += "4. **MIT** (USA) — B.S., Avg $150K, 4% acceptance\n"
+      msg += "5. **Oxford** (UK) — B.A., Avg £65K, MAT + Interview\n"
+      msg += "6. **ETH Zurich** (Switzerland) — B.Sc., Avg CHF 105K, ~$730/yr tuition!\n"
+      msg += "7. **NUS** (Singapore) — B.Comp., Avg S$72K\n"
+      msg += "8. **U of Toronto** (Canada) — B.Sc., Avg C$85K\n\n"
+      const reviews = alumni.filter(a => a.review && ['cse-iit-delhi', 'cs-mit', 'cs-oxford', 'cs-eth-zurich', 'cs-nus', 'cs-toronto'].includes(a.programId)).slice(0, 3)
       if (reviews.length) {
         msg += "**What alumni say:**\n"
-        reviews.forEach(r => {
-          msg += `> "${r.review.text}" — *${r.name}, ${r.company}*\n\n`
-        })
+        reviews.forEach(r => { msg += `> "${r.review.text}" — *${r.name}, ${r.company}*\n\n` })
       }
-      msg += "\nWant me to compare these programs, or tell you more about a specific one?"
+      msg += "\nWant me to compare these, or tell you more about a specific one?"
       return msg
     }
   },
   {
     keywords: ['ece', 'electrical', 'electronics', 'hardware', 'vlsi', 'circuit'],
-    programFilter: ['ece-iit-delhi'],
     response: () => {
       const eceAlumni = alumni.filter(a => a.programId === 'ece-iit-delhi')
       let msg = "**ECE at IIT Delhi** is a top program for hardware and communications:\n\n"
@@ -37,15 +35,12 @@ const knowledgeBase = [
       msg += "- Cutoff: JEE Main 99.5+ percentile, JEE Advanced Top 500 AIR\n"
       msg += "- Top recruiters: Qualcomm, Texas Instruments, Intel, Samsung, Nvidia\n\n"
       msg += "**Alumni insights:**\n"
-      eceAlumni.filter(a => a.review).forEach(a => {
-        msg += `> "${a.review.text}" — *${a.name}, ${a.company}*\n\n`
-      })
+      eceAlumni.filter(a => a.review).forEach(a => { msg += `> "${a.review.text}" — *${a.name}, ${a.company}*\n\n` })
       return msg
     }
   },
   {
     keywords: ['iit delhi', 'iitd', 'iit'],
-    programFilter: ['cse-iit-delhi', 'ece-iit-delhi'],
     response: () => {
       let msg = "**IIT Delhi** is one of India's premier engineering institutes:\n\n"
       msg += "📊 **Programs available:**\n"
@@ -55,15 +50,12 @@ const knowledgeBase = [
       msg += "📝 **Tests:** JEE Main + JEE Advanced\n\n"
       const iitAlumni = alumni.filter(a => a.programId.startsWith('cse-iit') || a.programId.startsWith('ece-iit'))
       msg += "**What IIT Delhi alumni say:**\n"
-      iitAlumni.filter(a => a.review).slice(0, 3).forEach(a => {
-        msg += `> "${a.review.text}" — *${a.name}, Class of ${a.graduationYear}*\n\n`
-      })
+      iitAlumni.filter(a => a.review).slice(0, 3).forEach(a => { msg += `> "${a.review.text}" — *${a.name}, Class of ${a.graduationYear}*\n\n` })
       return msg
     }
   },
   {
     keywords: ['bits', 'pilani', 'bitsat'],
-    programFilter: ['cse-bits-pilani'],
     response: () => {
       let msg = "**BITS Pilani** is known for its flexible curriculum and industry integration:\n\n"
       msg += "📊 **CS Program:** B.E., 4 years\n"
@@ -74,15 +66,12 @@ const knowledgeBase = [
       msg += "**Key advantage:** Practice School program gives real industry experience before graduation.\n\n"
       const bitsAlumni = alumni.filter(a => a.programId === 'cse-bits-pilani')
       msg += "**Alumni reviews:**\n"
-      bitsAlumni.filter(a => a.review).forEach(a => {
-        msg += `> "${a.review.text}" — *${a.name}, ${a.company}*\n\n`
-      })
+      bitsAlumni.filter(a => a.review).forEach(a => { msg += `> "${a.review.text}" — *${a.name}, ${a.company}*\n\n` })
       return msg
     }
   },
   {
     keywords: ['nit', 'trichy', 'nitt', 'national institute'],
-    programFilter: ['cse-nit-trichy'],
     response: () => {
       let msg = "**NIT Trichy** offers the best ROI among top engineering colleges:\n\n"
       msg += "📊 **CSE Program:** B.Tech, 4 years\n"
@@ -92,9 +81,108 @@ const knowledgeBase = [
       msg += "- **Test:** JEE Main (98-99.5 percentile)\n\n"
       const nitAlumni = alumni.filter(a => a.programId === 'cse-nit-trichy')
       msg += "**Alumni reviews:**\n"
-      nitAlumni.filter(a => a.review).forEach(a => {
-        msg += `> "${a.review.text}" — *${a.name}, ${a.company}*\n\n`
-      })
+      nitAlumni.filter(a => a.review).forEach(a => { msg += `> "${a.review.text}" — *${a.name}, ${a.company}*\n\n` })
+      return msg
+    }
+  },
+  // International universities
+  {
+    keywords: ['mit', 'massachusetts', 'cambridge'],
+    response: () => {
+      let msg = "**MIT (EECS)** — the world's #1 CS program:\n\n"
+      msg += "📊 B.S. in Computer Science, 4 years\n"
+      msg += "- Avg Package: **$150K** | Highest: **$500K+**\n"
+      msg += "- Placement Rate: **99%**\n"
+      msg += "- Fees: ~$58K/year (but financial aid can cover 100%)\n"
+      msg += "- Acceptance rate: **~4%** (extremely competitive)\n"
+      msg += "- Tests: SAT/ACT (optional), TOEFL/IELTS for intl\n\n"
+      msg += "🔬 **Research goldmine:** UROP, CSAIL, MIT Media Lab, Lincoln Laboratory\n\n"
+      const mitAlumni = alumni.filter(a => a.programId === 'cs-mit')
+      msg += "**What MIT alumni say:**\n"
+      mitAlumni.filter(a => a.review).forEach(a => { msg += `> "${a.review.text}" — *${a.name}, ${a.company}*\n\n` })
+      return msg
+    }
+  },
+  {
+    keywords: ['oxford', 'uk', 'england', 'british'],
+    response: () => {
+      let msg = "**University of Oxford — Computer Science:**\n\n"
+      msg += "📊 B.A. (M.A.) in Computer Science, 3-4 years\n"
+      msg += "- Avg Package: **£65K** | Highest: **£200K+**\n"
+      msg += "- Placement Rate: **97%**\n"
+      msg += "- Fees: ~£35K/year for international students\n"
+      msg += "- Acceptance rate: **~8%**\n"
+      msg += "- Tests: **MAT (Maths Admissions Test)** + Interview\n\n"
+      msg += "✨ **Unique:** Tutorial system — weekly 1-on-1s with world-leading researchers!\n\n"
+      const oxAlumni = alumni.filter(a => a.programId === 'cs-oxford')
+      msg += "**What Oxford alumni say:**\n"
+      oxAlumni.filter(a => a.review).forEach(a => { msg += `> "${a.review.text}" — *${a.name}, ${a.company}*\n\n` })
+      return msg
+    }
+  },
+  {
+    keywords: ['eth', 'zurich', 'swiss', 'switzerland', 'europe'],
+    response: () => {
+      let msg = "**ETH Zurich — Computer Science:**\n\n"
+      msg += "📊 B.Sc. in Computer Science, 3 years\n"
+      msg += "- Avg Package: **CHF 105K** | Highest: **CHF 250K+**\n"
+      msg += "- Placement Rate: **96%**\n"
+      msg += "- Fees: **~CHF 730/year (~$2,500 total!)** — absurdly cheap!\n"
+      msg += "- Entrance exam pass rate: ~30%\n\n"
+      msg += "🏔️ **Highlights:** Europe's #1 CS department, Google Zurich next door, stunning city\n\n"
+      const ethAlumni = alumni.filter(a => a.programId === 'cs-eth-zurich')
+      msg += "**What ETH alumni say:**\n"
+      ethAlumni.filter(a => a.review).forEach(a => { msg += `> "${a.review.text}" — *${a.name}, ${a.company}*\n\n` })
+      return msg
+    }
+  },
+  {
+    keywords: ['nus', 'singapore', 'national university'],
+    response: () => {
+      let msg = "**NUS (National University of Singapore) — Computer Science:**\n\n"
+      msg += "📊 B.Comp. in Computer Science, 4 years\n"
+      msg += "- Avg Package: **S$72K** | Highest: **S$200K+**\n"
+      msg += "- Placement Rate: **94%**\n"
+      msg += "- Fees: ~S$18.6K/year (with MOE tuition grant)\n"
+      msg += "- Top recruiters: Google, Sea Group, Grab, Shopee\n\n"
+      msg += "🌏 **Gateway to SE Asia:** Singapore work visa pathway, booming tech scene\n\n"
+      const nusAlumni = alumni.filter(a => a.programId === 'cs-nus')
+      msg += "**What NUS alumni say:**\n"
+      nusAlumni.filter(a => a.review).forEach(a => { msg += `> "${a.review.text}" — *${a.name}, ${a.company}*\n\n` })
+      return msg
+    }
+  },
+  {
+    keywords: ['toronto', 'canada', 'uoft', 'canadian', 'pr'],
+    response: () => {
+      let msg = "**University of Toronto — Computer Science:**\n\n"
+      msg += "📊 B.Sc. in Computer Science, 4 years\n"
+      msg += "- Avg Package: **C$85K** | Highest: **C$250K+**\n"
+      msg += "- Placement Rate: **93%**\n"
+      msg += "- Fees: ~C$61.7K/year (international)\n"
+      msg += "- Top recruiters: Google, Shopify, Amazon, Wealthsimple\n\n"
+      msg += "🍁 **Key perks:** Birthplace of deep learning (Hinton's home), PGWP pathway to Canadian PR\n\n"
+      const uoftAlumni = alumni.filter(a => a.programId === 'cs-toronto')
+      msg += "**What UofT alumni say:**\n"
+      uoftAlumni.filter(a => a.review).forEach(a => { msg += `> "${a.review.text}" — *${a.name}, ${a.company}*\n\n` })
+      return msg
+    }
+  },
+  {
+    keywords: ['abroad', 'international', 'foreign', 'overseas', 'outside india', 'study abroad'],
+    response: () => {
+      let msg = "**International Programs on AlumBridge:**\n\n"
+      msg += "🇺🇸 **MIT** (USA) — World #1 CS, $150K avg package, 4% acceptance\n"
+      msg += "🇬🇧 **Oxford** (UK) — Tutorial system, £65K avg, MAT required\n"
+      msg += "🇨🇭 **ETH Zurich** (Switzerland) — Europe's best, only $730/yr tuition!\n"
+      msg += "🇸🇬 **NUS** (Singapore) — SE Asia gateway, S$72K avg, great value\n"
+      msg += "🇨🇦 **U of Toronto** (Canada) — AI hub, C$85K avg, PR pathway\n\n"
+      msg += "💡 **Key considerations for studying abroad:**\n"
+      msg += "- Financial aid available at MIT (need-blind for internationals)\n"
+      msg += "- ETH Zurich is incredibly affordable but very rigorous\n"
+      msg += "- NUS offers MOE tuition grants cutting fees by 60%\n"
+      msg += "- UofT gives PGWP (Post-Graduation Work Permit) → Canadian PR\n\n"
+      msg += "Want details on any specific university?"
       return msg
     }
   },
@@ -102,22 +190,26 @@ const knowledgeBase = [
   {
     keywords: ['placement', 'package', 'salary', 'job', 'recruiter', 'hired', 'hire'],
     response: () => {
-      let msg = "**Placement Comparison across programs:**\n\n"
+      let msg = "**Placement Comparison across ALL programs:**\n\n"
+      msg += "🇮🇳 **India:**\n"
       msg += "| Program | Avg Package | Highest | Rate |\n"
       msg += "|---------|------------|---------|------|\n"
       msg += "| IIT Delhi CSE | 22 LPA | 1.5 Cr | 95% |\n"
       msg += "| IIT Delhi ECE | 18 LPA | 1.2 Cr | 92% |\n"
       msg += "| BITS Pilani CS | 16 LPA | 60 LPA | 90% |\n"
       msg += "| NIT Trichy CSE | 12 LPA | 45 LPA | 88% |\n\n"
-      const placementAlumni = alumni.filter(a => 
-        a.expertise.some(e => e.toLowerCase().includes('placement') || e.toLowerCase().includes('career'))
-      )
+      msg += "🌍 **International:**\n"
+      msg += "| Program | Avg Package | Highest | Rate |\n"
+      msg += "|---------|------------|---------|------|\n"
+      msg += "| MIT | $150K | $500K+ | 99% |\n"
+      msg += "| Oxford | £65K | £200K+ | 97% |\n"
+      msg += "| ETH Zurich | CHF 105K | CHF 250K+ | 96% |\n"
+      msg += "| NUS | S$72K | S$200K+ | 94% |\n"
+      msg += "| U of Toronto | C$85K | C$250K+ | 93% |\n\n"
+      const placementAlumni = alumni.filter(a => a.expertise.some(e => e.toLowerCase().includes('placement') || e.toLowerCase().includes('career')))
       if (placementAlumni.length) {
         msg += "**Placement advice from alumni:**\n"
-        placementAlumni.slice(0, 2).forEach(a => {
-          if (a.review) msg += `> "${a.review.text}" — *${a.name}, ${a.company}*\n\n`
-        })
-        msg += `\n💡 **Tip:** You can [book a call](/alumni/${placementAlumni[0].id}) with ${placementAlumni[0].name} to discuss placements in detail!`
+        placementAlumni.slice(0, 2).forEach(a => { if (a.review) msg += `> "${a.review.text}" — *${a.name}, ${a.company}*\n\n` })
       }
       return msg
     }
@@ -125,34 +217,44 @@ const knowledgeBase = [
   {
     keywords: ['fees', 'cost', 'afford', 'money', 'budget', 'expensive', 'cheap', 'roi', 'worth'],
     response: () => {
-      let msg = "**Fee Comparison (Total for 4 years):**\n\n"
-      msg += "| Program | Total Fees | Avg Package | ROI Ratio |\n"
-      msg += "|---------|-----------|-------------|----------|\n"
-      msg += "| NIT Trichy CSE | ₹6L | 12 LPA | **2x** (Best ROI) |\n"
-      msg += "| IIT Delhi CSE | ₹9L | 22 LPA | 2.4x |\n"
-      msg += "| IIT Delhi ECE | ₹9L | 18 LPA | 2x |\n"
-      msg += "| BITS Pilani CS | ₹22.8L | 16 LPA | 0.7x |\n\n"
-      msg += "🏆 **Best Value:** NIT Trichy — lowest fees with strong placements\n"
-      msg += "🏆 **Highest Earning:** IIT Delhi CSE — highest avg package\n\n"
-      msg += "BITS is expensive but the Practice School program and zero-attendance policy offer unique advantages."
+      let msg = "**Fee Comparison (Total, converted to USD):**\n\n"
+      msg += "🇮🇳 **India:**\n"
+      msg += "| Program | Total Fees | Avg Package | ROI |\n"
+      msg += "|---------|-----------|-------------|-----|\n"
+      msg += "| NIT Trichy | ~$7,200 | 12 LPA | **Best!** |\n"
+      msg += "| IIT Delhi | ~$10,800 | 22 LPA | Great |\n"
+      msg += "| BITS Pilani | ~$27,400 | 16 LPA | Moderate |\n\n"
+      msg += "🌍 **International:**\n"
+      msg += "| Program | Total Fees | Avg Package | ROI |\n"
+      msg += "|---------|-----------|-------------|-----|\n"
+      msg += "| ETH Zurich | ~$2,500 | CHF 105K | **INSANE** |\n"
+      msg += "| NUS (with grant) | ~$55K | S$72K | Good |\n"
+      msg += "| MIT (with aid) | $0-30K | $150K | Amazing |\n"
+      msg += "| U of Toronto | ~$135K | C$85K | Moderate |\n"
+      msg += "| Oxford | ~$176K | £65K | Moderate |\n\n"
+      msg += "🏆 **Best Value Picks:** ETH Zurich (cheapest + top salaries) and NIT Trichy (lowest INR fees)"
       return msg
     }
   },
   {
-    keywords: ['jee', 'entrance', 'exam', 'test', 'cutoff', 'rank', 'percentile', 'bitsat', 'main', 'advanced'],
+    keywords: ['jee', 'entrance', 'exam', 'test', 'cutoff', 'rank', 'percentile', 'bitsat', 'sat', 'mat', 'act'],
     response: () => {
       let msg = "**Entrance Exam Requirements & Cutoffs:**\n\n"
+      msg += "🇮🇳 **India:**\n"
       msg += "| Program | Tests | Cutoff |\n"
       msg += "|---------|-------|--------|\n"
       msg += "| IIT Delhi CSE | JEE Main + Advanced | 99.9+ percentile, Top 100 AIR |\n"
       msg += "| IIT Delhi ECE | JEE Main + Advanced | 99.5+ percentile, Top 500 AIR |\n"
       msg += "| BITS Pilani CS | BITSAT | 350-380 (out of 450) |\n"
       msg += "| NIT Trichy CSE | JEE Main | 98-99.5 percentile |\n\n"
-      msg += "**Tips from alumni who cracked these exams:**\n\n"
-      const sneha = alumni.find(a => a.id === 'a5')
-      const aditya = alumni.find(a => a.id === 'a9')
-      if (sneha) msg += `> "${sneha.review.text}" — *${sneha.name}*\n\n`
-      if (aditya) msg += `> "${aditya.review.text}" — *${aditya.name}*\n\n`
+      msg += "🌍 **International:**\n"
+      msg += "| Program | Tests | Cutoff |\n"
+      msg += "|---------|-------|--------|\n"
+      msg += "| MIT | SAT/ACT (optional) | SAT 1520-1580, ACT 35-36 |\n"
+      msg += "| Oxford | MAT + Interview | MAT 70+, A*AA A-levels |\n"
+      msg += "| ETH Zurich | Entrance exam | 60%+ in Math & Physics |\n"
+      msg += "| NUS | SAT/IELTS | SAT 1450+, AAA-A*A*A* |\n"
+      msg += "| U of Toronto | IELTS/TOEFL | Grade 12: 90-95%+ |\n"
       return msg
     }
   },
@@ -160,22 +262,17 @@ const knowledgeBase = [
     keywords: ['research', 'phd', 'paper', 'publication', 'stanford', 'masters', 'higher studies'],
     response: () => {
       let msg = "**Research Opportunities by Program:**\n\n"
-      msg += "**IIT Delhi CSE:**\n"
-      msg += "- Undergraduate Research Award (URA)\n"
-      msg += "- AI & Machine Learning Lab\n"
-      msg += "- Cybersecurity Research Center\n\n"
-      msg += "**IIT Delhi ECE:**\n"
-      msg += "- VLSI Design Lab\n"
-      msg += "- Signal Processing Research\n"
-      msg += "- 5G & Wireless Communications\n\n"
-      msg += "**BITS Pilani:**\n"
-      msg += "- Industry-sponsored projects\n"
-      msg += "- Data Science & Analytics Lab\n\n"
+      msg += "🏆 **Top for Research:**\n\n"
+      msg += "**MIT** — UROP, CSAIL (world's top AI lab), Media Lab, published as undergrad is normal\n"
+      msg += "**Oxford** — Tutorial system = 1-on-1 with researchers, Oxford-Man Institute\n"
+      msg += "**ETH Zurich** — Robotics & AI Labs, spin-off incubator\n"
+      msg += "**IIT Delhi** — URA (Undergraduate Research Award), AI & ML Lab\n\n"
       const karthik = alumni.find(a => a.id === 'a4')
-      if (karthik) {
-        msg += `\n**Alumni who went into research:**\n`
-        msg += `> "${karthik.review.text}" — *${karthik.name}, ${karthik.company}*\n\n`
-        msg += `💡 [Book a call with ${karthik.name}](/alumni/${karthik.id}) to discuss research careers!`
+      const jason = alumni.find(a => a.id === 'a15')
+      if (karthik || jason) {
+        msg += "**Alumni in research:**\n"
+        if (jason) msg += `> "${jason.review.text}" — *${jason.name}, ${jason.company}*\n\n`
+        if (karthik) msg += `> "${karthik.review.text}" — *${karthik.name}, ${karthik.company}*\n\n`
       }
       return msg
     }
@@ -184,17 +281,14 @@ const knowledgeBase = [
     keywords: ['startup', 'entrepreneur', 'founder', 'build', 'venture', 'yc'],
     response: () => {
       let msg = "**Best programs for aspiring entrepreneurs:**\n\n"
-      msg += "1. **IIT Delhi** — Strong alumni network for co-founders & investors, hackathon culture\n"
-      msg += "2. **BITS Pilani** — Entrepreneurship cell, freedom to experiment, zero-attendance policy\n\n"
-      const startupAlumni = alumni.filter(a => 
-        a.expertise.some(e => e.toLowerCase().includes('startup') || e.toLowerCase().includes('entrepreneur'))
-      )
+      msg += "1. **IIT Delhi** — Strong alumni network for co-founders & investors\n"
+      msg += "2. **BITS Pilani** — Entrepreneurship cell, freedom to experiment\n"
+      msg += "3. **MIT** — Media Lab, $100K competition, Silicon Valley pipeline\n"
+      msg += "4. **Oxford** — Oxford Entrepreneurs society\n\n"
+      const startupAlumni = alumni.filter(a => a.expertise.some(e => e.toLowerCase().includes('startup') || e.toLowerCase().includes('entrepreneur')))
       if (startupAlumni.length) {
         msg += "**From founders themselves:**\n"
-        startupAlumni.forEach(a => {
-          if (a.review) msg += `> "${a.review.text}" — *${a.name}, ${a.company}*\n\n`
-        })
-        msg += `\n💡 [Talk to ${startupAlumni[0].name}](/alumni/${startupAlumni[0].id}) about building a startup!`
+        startupAlumni.forEach(a => { if (a.review) msg += `> "${a.review.text}" — *${a.name}, ${a.company}*\n\n` })
       }
       return msg
     }
@@ -203,27 +297,15 @@ const knowledgeBase = [
     keywords: ['campus', 'life', 'hostel', 'culture', 'fest', 'club', 'fun', 'experience'],
     response: () => {
       let msg = "**Campus Life Highlights:**\n\n"
-      msg += "**IIT Delhi** 🏛️\n"
-      msg += "- Located in the heart of Delhi (Hauz Khas)\n"
-      msg += "- Vibrant tech clubs, hackathons, and cultural fests\n"
-      msg += "- Strong peer group that pushes you to grow\n\n"
-      msg += "**BITS Pilani** 🌵\n"
-      msg += "- Desert campus with a unique vibe\n"
-      msg += "- Zero-attendance policy = more freedom\n"
-      msg += "- Amazing fests (Oasis, APOGEE, BOSM)\n\n"
-      msg += "**NIT Trichy** 🌴\n"
-      msg += "- Beautiful green campus in Tamil Nadu\n"
-      msg += "- Great hostel life and peer learning culture\n"
-      msg += "- Pragyan (tech fest) and NITTFEST (cultural)\n\n"
-      const campusAlumni = alumni.filter(a => 
-        a.expertise.some(e => e.toLowerCase().includes('campus') || e.toLowerCase().includes('culture'))
-      )
-      if (campusAlumni.length) {
-        msg += "**What alumni say:**\n"
-        campusAlumni.slice(0, 2).forEach(a => {
-          if (a.review) msg += `> "${a.review.text}" — *${a.name}*\n\n`
-        })
-      }
+      msg += "🇮🇳 **IIT Delhi** — Heart of Delhi, vibrant tech clubs, hackathons, cultural fests\n"
+      msg += "🇮🇳 **BITS Pilani** — Desert campus, zero-attendance, amazing fests (Oasis, APOGEE)\n"
+      msg += "🇮🇳 **NIT Trichy** — Beautiful green campus, great hostel life, Pragyan fest\n\n"
+      msg += "🌍 **International:**\n"
+      msg += "🇺🇸 **MIT** — HackMIT, quirky traditions, intense but fun\n"
+      msg += "🇬🇧 **Oxford** — College system, punting on the river, 800 years of history\n"
+      msg += "🇨🇭 **ETH Zurich** — Stunning Alps backdrop, Swiss precision, student bars\n"
+      msg += "🇸🇬 **NUS** — Modern campus, tropical weather, UTown is amazing\n"
+      msg += "🇨🇦 **U of Toronto** — Vibrant city, diverse food scene, Robarts library\n"
       return msg
     }
   },
@@ -231,29 +313,33 @@ const knowledgeBase = [
     keywords: ['compare', 'vs', 'versus', 'better', 'difference', 'which is best', 'choose', 'pick', 'decide'],
     response: () => {
       let msg = "**Quick Comparison Guide:**\n\n"
-      msg += "🏆 **Choose IIT Delhi CSE if:** You want the highest packages, top peer group, and research opportunities. Need Top 100 AIR.\n\n"
-      msg += "🏆 **Choose IIT Delhi ECE if:** You love hardware, want to work at chip companies, and are okay with slightly lower but still great packages.\n\n"
-      msg += "🏆 **Choose BITS Pilani if:** You value flexibility, industry exposure (Practice School), and don't mind higher fees. BITSAT based.\n\n"
-      msg += "🏆 **Choose NIT Trichy if:** You want the **best ROI** — lowest fees with strong placements. Great for students who want value for money.\n\n"
-      msg += "📊 Want a detailed comparison? Check our [Compare Programs](/compare) page for a full side-by-side table!"
+      msg += "🇮🇳 **India:**\n"
+      msg += "🏆 **IIT Delhi CSE** — Highest packages, top peer group, Top 100 AIR needed\n"
+      msg += "🏆 **NIT Trichy** — Best ROI, lowest fees, strong placements\n"
+      msg += "🏆 **BITS Pilani** — Flexibility, industry exposure, BITSAT based\n\n"
+      msg += "🌍 **International:**\n"
+      msg += "🏆 **MIT** — World's #1, if you can get in (4%), it's unmatched\n"
+      msg += "🏆 **ETH Zurich** — Europe's best, cheapest tuition, rigorous\n"
+      msg += "🏆 **Oxford** — Tutorial system, theoretical depth, 800-year prestige\n"
+      msg += "🏆 **NUS** — SE Asia gateway, great value with grants\n"
+      msg += "🏆 **U of Toronto** — AI capital, Canadian PR pathway\n\n"
+      msg += "📊 Try our [Compare Programs](/compare) page for a detailed side-by-side!"
       return msg
     }
   },
   {
     keywords: ['ml', 'machine learning', 'ai', 'artificial intelligence', 'data science', 'deep learning'],
     response: () => {
-      const mlAlumni = alumni.filter(a => 
-        a.expertise.some(e => e.toLowerCase().includes('ml') || e.toLowerCase().includes('ai') || e.toLowerCase().includes('data science'))
-      )
-      let msg = "**AI/ML & Data Science Opportunities:**\n\n"
-      msg += "**IIT Delhi CSE** has a dedicated AI & Machine Learning Lab and Undergraduate Research Award.\n\n"
-      msg += "**IIT Delhi ECE** offers cross-disciplinary ML for edge devices.\n\n"
-      msg += "**BITS Pilani** has a Data Science & Analytics Lab.\n\n"
+      const mlAlumni = alumni.filter(a => a.expertise.some(e => e.toLowerCase().includes('ml') || e.toLowerCase().includes('ai') || e.toLowerCase().includes('data science')))
+      let msg = "**AI/ML & Data Science — Best Programs:**\n\n"
+      msg += "🥇 **MIT** — CSAIL, world's top AI research lab\n"
+      msg += "🥈 **U of Toronto** — Vector Institute, Geoffrey Hinton's legacy, birthplace of deep learning\n"
+      msg += "🥉 **Oxford** — Oxford-Man Institute, DeepMind connections\n"
+      msg += "4️⃣ **ETH Zurich** — Robotics & AI Labs\n"
+      msg += "5️⃣ **IIT Delhi** — AI & ML Lab, URA program\n\n"
       if (mlAlumni.length) {
         msg += "**Alumni working in AI/ML:**\n"
-        mlAlumni.forEach(a => {
-          msg += `- **${a.name}** — ${a.currentRole} at ${a.company}\n`
-        })
+        mlAlumni.slice(0, 5).forEach(a => { msg += `- **${a.name}** — ${a.currentRole} at ${a.company}\n` })
         msg += `\n💡 [Talk to ${mlAlumni[0].name}](/alumni/${mlAlumni[0].id}) about AI/ML careers!`
       }
       return msg
@@ -262,79 +348,59 @@ const knowledgeBase = [
   {
     keywords: ['hello', 'hi', 'hey', 'help', 'start', 'what can you'],
     response: () => {
-      let msg = "Hi there! 👋 I'm the **AlumBridge AI Assistant**, trained on insights from 14+ verified alumni across top engineering programs.\n\n"
-      msg += "**I can help you with:**\n\n"
-      msg += "📊 **Program comparison** — Compare fees, placements, cutoffs\n"
-      msg += "🎓 **Specific programs** — IIT Delhi, BITS Pilani, NIT Trichy\n"
-      msg += "💼 **Placements & careers** — Packages, recruiters, career paths\n"
-      msg += "📝 **Entrance exams** — JEE, BITSAT cutoffs and prep tips\n"
-      msg += "🏫 **Campus life** — Culture, hostels, fests\n"
-      msg += "🚀 **Research & startups** — Opportunities and alumni stories\n"
-      msg += "💰 **Fees & ROI** — Which program gives the best value\n\n"
-      msg += "Just ask me anything! For example:\n"
-      msg += '- "Which college has the best placements?"\n'
-      msg += '- "Tell me about IIT Delhi CSE"\n'
-      msg += '- "Is BITS Pilani worth the fees?"\n'
-      msg += '- "What cutoff do I need for IIT Delhi?"'
+      let msg = "Hey there! 👋 Welcome to **AlumBridge AI**!\n\n"
+      msg += "I'm trained on insights from **25+ verified alumni** across **8 programs in 6 countries**. I'll give you honest, data-backed answers — no marketing fluff.\n\n"
+      msg += "**I can help with:**\n\n"
+      msg += "📊 **Compare programs** — India + international\n"
+      msg += "🎓 **Specific universities** — MIT, Oxford, ETH, IITs, BITS, NUS, UofT\n"
+      msg += "💼 **Placements & careers** — packages, recruiters, outcomes\n"
+      msg += "📝 **Entrance exams** — JEE, SAT, MAT, BITSAT cutoffs\n"
+      msg += "💰 **Fees & ROI** — which programs give the best value\n"
+      msg += "🏫 **Campus life** — culture, hostels, city vibes\n"
+      msg += "🚀 **Research & startups** — labs, publications, founder stories\n\n"
+      msg += "Just ask anything! For example:\n"
+      msg += '- "Which program has the best placements?"\n'
+      msg += '- "Tell me about MIT"\n'
+      msg += '- "Compare ETH Zurich vs IIT Delhi"\n'
+      msg += '- "Is NUS good for international students?"'
       return msg
     }
   },
 ]
 
-// Default responses when no match found
 const defaultResponses = [
-  "That's an interesting question! While I don't have specific data on that, I can help you with:\n\n• **Program details** (fees, eligibility, placements)\n• **Comparisons** between IIT Delhi, BITS, and NIT Trichy\n• **Alumni insights** from verified graduates\n• **Entrance exam** cutoffs and tips\n• **Career paths** (research, startups, placements)\n\nTry asking something like \"Which program has the best placements?\" or \"Tell me about BITS Pilani\"",
-  "I'm not sure about that specific topic yet, but I know a lot about these areas:\n\n📊 Program comparison & rankings\n💼 Placement statistics & career outcomes\n📝 Entrance exam requirements\n🏫 Campus life & culture\n💰 Fees & ROI analysis\n\nWhat would you like to know more about?",
+  "Interesting question! I might not have specific data on that, but I can help with:\n\n• **Program details** — fees, eligibility, placements across 6 countries\n• **Comparisons** — India + international programs\n• **Alumni insights** — from 25+ verified graduates\n• **Entrance exams** — JEE, SAT, MAT, BITSAT\n• **Career paths** — research, startups, placements\n\nTry asking \"Which international program is best?\" or \"Compare MIT vs IIT Delhi\"",
+  "I'm not sure about that specific topic yet, but here's what I know well:\n\n📊 8 programs from 6 countries\n💼 Placement stats & career outcomes\n📝 Entrance exam requirements & cutoffs\n🏫 Campus life across India, US, UK, Europe & Asia\n💰 Fees & ROI analysis\n\nWhat would you like to explore?",
 ]
 
 export function getChatbotResponse(userMessage) {
   const msg = userMessage.toLowerCase().trim()
-  
-  // Score each knowledge entry based on keyword matches
   const scored = knowledgeBase.map(entry => {
     let score = 0
     for (const keyword of entry.keywords) {
-      if (msg.includes(keyword)) {
-        // Longer keyword matches are worth more
-        score += keyword.length
-      }
+      if (msg.includes(keyword)) score += keyword.length
     }
     return { entry, score }
   })
-  
-  // Sort by score descending
   scored.sort((a, b) => b.score - a.score)
-  
-  // If we have a good match (score > 0), use it
-  if (scored[0].score > 0) {
-    return scored[0].entry.response(scored)
-  }
-  
-  // Fuzzy matching for common intents
-  if (msg.includes('best') || msg.includes('top') || msg.includes('recommend')) {
-    return knowledgeBase.find(e => e.keywords.includes('compare')).response()
-  }
-  
+  if (scored[0].score > 0) return scored[0].entry.response(scored)
+  if (msg.includes('best') || msg.includes('top') || msg.includes('recommend')) return knowledgeBase.find(e => e.keywords.includes('compare')).response()
   if (msg.includes('alumni') || msg.includes('talk') || msg.includes('speak') || msg.includes('call')) {
-    const randomAlum = alumni[Math.floor(Math.random() * alumni.length)]
+    const randomAlumni = alumni.sort(() => Math.random() - 0.5).slice(0, 4)
     return `Here are some verified alumni you can connect with:\n\n` +
-      alumni.slice(0, 4).map(a => 
-        `**${a.name}** — ${a.currentRole} at ${a.company}\nExpertise: ${a.expertise.join(', ')}\n[View profile →](/alumni/${a.id})`
-      ).join('\n\n') +
+      randomAlumni.map(a => `**${a.name}** — ${a.currentRole} at ${a.company}\nExpertise: ${a.expertise.join(', ')}\n[View profile →](/alumni/${a.id})`).join('\n\n') +
       `\n\nYou can ask them questions or book a 15-min call!`
   }
-  
-  // Default response
   return defaultResponses[Math.floor(Math.random() * defaultResponses.length)]
 }
 
 export function getQuickSuggestions() {
   return [
     "Which college has the best placements?",
-    "Compare IIT Delhi vs BITS Pilani",
-    "What are the entrance exam cutoffs?",
-    "Tell me about campus life",
-    "Is NIT Trichy good ROI?",
-    "How do I get into AI/ML research?",
+    "Tell me about MIT",
+    "Compare IIT Delhi vs ETH Zurich",
+    "Best program for AI/ML?",
+    "Which has the lowest fees?",
+    "How do I study abroad?",
   ]
 }

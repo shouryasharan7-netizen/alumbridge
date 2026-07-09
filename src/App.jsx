@@ -10,7 +10,7 @@ import AlumniConnect from './pages/AlumniConnect'
 
 function App() {
   return (
-    <div className="min-h-screen flex flex-col bg-gray-50">
+    <div className="min-h-screen flex flex-col bg-cream">
       <Navbar />
       <main className="flex-1">
         <Routes>

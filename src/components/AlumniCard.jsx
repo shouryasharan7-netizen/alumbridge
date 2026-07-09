@@ -10,49 +10,46 @@ export default function AlumniCard({ alum }) {
 
   const colors = [
     'from-primary-500 to-primary-700',
-    'from-purple-500 to-purple-700',
-    'from-pink-500 to-pink-700',
-    'from-indigo-500 to-indigo-700',
-    'from-teal-500 to-teal-700',
+    'from-crimson-500 to-crimson-700',
+    'from-primary-600 to-crimson-600',
+    'from-gold-500 to-gold-700',
+    'from-crimson-400 to-primary-600',
   ]
   const colorIndex = alum.id.charCodeAt(1) % colors.length
 
   return (
     <Link
       to={`/alumni/${alum.id}`}
-      className="bg-white rounded-xl shadow-sm hover:shadow-md border border-gray-100 hover:border-primary-200 transition-all duration-200 p-5 group"
+      className="bg-white rounded-xl shadow-sm hover:shadow-lg border border-primary-100/50 hover:border-gold-300 transition-all duration-300 p-4 group"
     >
-      <div className="flex items-start gap-4">
-        {/* Avatar */}
-        <div className={`w-12 h-12 rounded-full bg-gradient-to-br ${colors[colorIndex]} flex items-center justify-center text-white font-bold text-sm flex-shrink-0`}>
+      <div className="flex items-start gap-3.5">
+        <div className={`w-11 h-11 rounded-full bg-gradient-to-br ${colors[colorIndex]} flex items-center justify-center text-white font-bold text-sm flex-shrink-0 ring-2 ring-white shadow-sm`}>
           {initials}
         </div>
 
-        {/* Info */}
         <div className="flex-1 min-w-0">
           <div className="flex items-center justify-between">
-            <h4 className="font-semibold text-gray-900 text-sm">{alum.name}</h4>
+            <h4 className="font-semibold text-primary-700 text-sm">{alum.name}</h4>
             {alum.available && (
-              <span className="text-xs bg-green-100 text-green-700 px-2 py-0.5 rounded-full font-medium">
+              <span className="text-[10px] bg-emerald-50 text-emerald-700 px-2 py-0.5 rounded-full font-semibold ring-1 ring-emerald-200">
                 Available
               </span>
             )}
           </div>
-          <div className="flex items-center gap-1 text-gray-600 text-xs mt-1">
-            <Briefcase className="w-3 h-3" />
-            <span className="truncate">{alum.currentRole} at {alum.company}</span>
+          <div className="flex items-center gap-1 text-primary-500 text-xs mt-0.5">
+            <Briefcase className="w-3 h-3 text-crimson-400" />
+            <span className="truncate">{alum.currentRole} at <strong>{alum.company}</strong></span>
           </div>
-          <div className="flex items-center gap-1 text-gray-500 text-xs mt-0.5">
-            <Calendar className="w-3 h-3" />
+          <div className="flex items-center gap-1 text-primary-400 text-xs mt-0.5">
+            <Calendar className="w-3 h-3 text-gold-500" />
             <span>Class of {alum.graduationYear}</span>
           </div>
 
-          {/* Expertise tags */}
           <div className="flex flex-wrap gap-1 mt-2">
             {alum.expertise.slice(0, 3).map((tag) => (
               <span
                 key={tag}
-                className="text-xs bg-primary-50 text-primary-700 px-2 py-0.5 rounded-full"
+                className="text-[10px] bg-cream text-primary-600 px-2 py-0.5 rounded-full font-medium"
               >
                 {tag}
               </span>
@@ -60,7 +57,7 @@ export default function AlumniCard({ alum }) {
           </div>
         </div>
 
-        <ChevronRight className="w-5 h-5 text-gray-300 group-hover:text-primary-500 transition flex-shrink-0 mt-1" />
+        <ChevronRight className="w-4 h-4 text-primary-200 group-hover:text-crimson-500 transition-all duration-200 flex-shrink-0 mt-1 group-hover:translate-x-0.5" />
       </div>
     </Link>
   )

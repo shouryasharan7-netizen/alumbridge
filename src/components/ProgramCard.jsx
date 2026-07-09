@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { Clock, IndianRupee, TrendingUp, BookOpen } from 'lucide-react'
+import { Clock, TrendingUp, BookOpen, MapPin } from 'lucide-react'
 
 export default function ProgramCard({ program, onShortlist, isShortlisted }) {
   const handleShortlist = (e) => {
@@ -11,55 +11,57 @@ export default function ProgramCard({ program, onShortlist, isShortlisted }) {
   return (
     <Link
       to={`/programs/${program.id}`}
-      className="block bg-white rounded-xl shadow-sm hover:shadow-md border border-gray-100 hover:border-primary-200 transition-all duration-200 overflow-hidden group"
+      className="group block bg-white rounded-2xl shadow-sm hover:shadow-xl border border-primary-100/50 hover:border-gold-300 transition-all duration-300 overflow-hidden"
     >
-      {/* Header */}
-      <div className="bg-gradient-to-r from-primary-600 to-primary-700 px-5 py-4">
-        <div className="flex items-start justify-between">
-          <div>
-            <h3 className="text-white font-semibold text-base leading-tight">{program.name}</h3>
-            <p className="text-primary-100 text-sm mt-1">{program.university} &middot; {program.degree}</p>
-          </div>
-          {onShortlist && (
-            <button
-              onClick={handleShortlist}
-              className={`text-xs font-medium px-2 py-1 rounded-full transition ${
-                isShortlisted
-                  ? 'bg-white text-primary-700'
-                  : 'bg-primary-500 text-primary-100 hover:bg-white hover:text-primary-700'
-              }`}
-            >
-              {isShortlisted ? '★ Shortlisted' : '+ Shortlist'}
-            </button>
-          )}
+      {/* Header with country flag */}
+      <div className="relative bg-gradient-to-br from-primary-600 via-primary-600 to-primary-700 px-5 py-5">
+        <div className="absolute top-3 right-3 text-2xl opacity-80">{program.flag}</div>
+        <div className="relative">
+          <h3 className="font-display text-white font-semibold text-base leading-tight mb-1">{program.name}</h3>
+          <p className="text-primary-200 text-sm flex items-center gap-1">
+            <MapPin className="w-3 h-3" />
+            {program.university} &middot; {program.degree}
+          </p>
         </div>
+        {onShortlist && (
+          <button
+            onClick={handleShortlist}
+            className={`absolute bottom-3 right-3 text-xs font-medium px-2.5 py-1 rounded-full transition-all duration-200 ${
+              isShortlisted
+                ? 'bg-gold-400 text-primary-800 shadow-sm'
+                : 'bg-white/15 text-white hover:bg-gold-400 hover:text-primary-800'
+            }`}
+          >
+            {isShortlisted ? '★ Shortlisted' : '+ Shortlist'}
+          </button>
+        )}
       </div>
 
       {/* Stats */}
       <div className="p-5 space-y-3">
-        <div className="flex items-center gap-2 text-sm text-gray-600">
-          <IndianRupee className="w-4 h-4 text-primary-500 flex-shrink-0" />
-          <span>₹{(program.fees.total / 100000).toFixed(1)}L total fees</span>
+        <div className="flex items-center justify-between">
+          <span className="text-xs font-medium text-primary-400 uppercase tracking-wide">{program.country}</span>
+          <span className="text-xs text-gold-600 font-medium">{program.fees.usdEquiv}</span>
         </div>
-        <div className="flex items-center gap-2 text-sm text-gray-600">
-          <TrendingUp className="w-4 h-4 text-green-500 flex-shrink-0" />
-          <span>Avg. Package: {program.placementStats.avgPackage}</span>
+        <div className="flex items-center gap-2 text-sm text-primary-600/80">
+          <TrendingUp className="w-4 h-4 text-crimson-500" />
+          <span>Avg. Package: <strong className="text-primary-600">{program.placementStats.avgPackage}</strong></span>
         </div>
-        <div className="flex items-center gap-2 text-sm text-gray-600">
-          <Clock className="w-4 h-4 text-orange-500 flex-shrink-0" />
-          <span>{program.duration}</span>
+        <div className="flex items-center gap-2 text-sm text-primary-600/80">
+          <Clock className="w-4 h-4 text-gold-500" />
+          <span>{program.duration} &middot; {program.placementStats.placementRate} placed</span>
         </div>
-        <div className="flex items-center gap-2 text-sm text-gray-600">
-          <BookOpen className="w-4 h-4 text-purple-500 flex-shrink-0" />
-          <span>{program.testsRequired.join(', ')}</span>
+        <div className="flex items-center gap-2 text-sm text-primary-600/80">
+          <BookOpen className="w-4 h-4 text-primary-400" />
+          <span className="truncate">{program.testsRequired.join(', ')}</span>
         </div>
       </div>
 
       {/* Footer */}
-      <div className="px-5 py-3 border-t border-gray-100 bg-gray-50 flex justify-between items-center">
-        <span className="text-xs text-gray-500">Placement: {program.placementStats.placementRate}</span>
-        <span className="text-xs text-primary-600 font-medium group-hover:translate-x-1 transition-transform">
-          View Details →
+      <div className="px-5 py-3 border-t border-primary-50 bg-parchment flex justify-between items-center">
+        <span className="text-[11px] text-primary-400 font-medium">Cutoff: {program.cutoffRank.split(' ')[0]}</span>
+        <span className="text-xs text-crimson-600 font-semibold group-hover:translate-x-1 transition-transform duration-200 flex items-center gap-1">
+          View Details <span className="text-sm">→</span>
         </span>
       </div>
     </Link>
