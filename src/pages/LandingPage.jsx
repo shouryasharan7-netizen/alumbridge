@@ -95,9 +95,6 @@ export default function LandingPage() {
               <Link to="/programs" className="btn-brutal btn-primary">
                 BROWSE PROGRAMS <ArrowRight className="w-4 h-4" />
               </Link>
-              <Link to="/programs" className="btn-brutal btn-secondary">
-                BROWSE & COMPARE
-              </Link>
             </div>
           </div>
 
