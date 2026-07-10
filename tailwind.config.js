@@ -39,9 +39,9 @@ export default {
       },
       fontFamily: {
         display: ['Norwester', 'Impact', 'Arial Narrow', 'sans-serif'],
-        mono: ['JetBrains Mono', 'Fira Code', 'monospace'],
-        serif: ['Georgia Pro', 'Georgia', 'Cambria', 'Times New Roman', 'serif'],
-        body: ['system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'sans-serif'],
+        mono: ['Norwester', 'Impact', 'Arial Narrow', 'sans-serif'],
+        serif: ['Norwester', 'Impact', 'Arial Narrow', 'sans-serif'],
+        body: ['Norwester', 'Impact', 'Arial Narrow', 'sans-serif'],
       },
       boxShadow: {
         'brutal-sm': '2px 2px 0px 0px var(--border-color)',

@@ -16,14 +16,14 @@ export default function AlumniCard({ alum }) {
     >
       <div className="flex items-start gap-3">
         <div className="w-11 h-11 flex items-center justify-center text-sm font-bold flex-shrink-0 border-2"
-          style={{ borderColor: 'var(--border-color)', background: 'var(--card)', color: 'var(--fg)', fontFamily: 'JetBrains Mono, monospace' }}>
+          style={{ borderColor: 'var(--border-color)', background: 'var(--card)', color: 'var(--fg)', fontFamily: "'Norwester', Impact, 'Arial Narrow', sans-serif" }}>
           {initials}
         </div>
 
         <div className="flex-1 min-w-0">
           <div className="flex items-center justify-between gap-2">
             <div className="flex items-center gap-2">
-              <h4 className="font-bold text-sm" style={{ color: 'var(--fg)', fontFamily: 'system-ui, sans-serif' }}>{alum.name}</h4>
+              <h4 className="font-bold text-sm" style={{ color: 'var(--fg)', fontFamily: "'Norwester', Impact, 'Arial Narrow', sans-serif" }}>{alum.name}</h4>
               {alum.available && (
                 <span className="inline-flex items-center gap-0.5 text-[9px] font-bold uppercase tracking-wider px-1.5 py-0.5 border"
                   style={{ borderColor: '#059669', color: '#059669' }}>
@@ -33,11 +33,11 @@ export default function AlumniCard({ alum }) {
             </div>
             <ArrowRight className="w-4 h-4 flex-shrink-0 transition-transform" style={{ color: 'var(--subtle-text)' }} />
           </div>
-          <div className="flex items-center gap-1 text-xs mt-1" style={{ color: 'var(--muted-text)', fontFamily: 'JetBrains Mono, monospace' }}>
+          <div className="flex items-center gap-1 text-xs mt-1" style={{ color: 'var(--muted-text)', fontFamily: "'Norwester', Impact, 'Arial Narrow', sans-serif" }}>
             <Briefcase className="w-3 h-3" style={{ color: 'var(--crimson)' }} />
             <span className="truncate">{alum.currentRole} @ <strong>{alum.company}</strong></span>
           </div>
-          <div className="flex items-center gap-1 text-xs mt-0.5" style={{ color: 'var(--subtle-text)', fontFamily: 'JetBrains Mono, monospace' }}>
+          <div className="flex items-center gap-1 text-xs mt-0.5" style={{ color: 'var(--subtle-text)', fontFamily: "'Norwester', Impact, 'Arial Narrow', sans-serif" }}>
             <Calendar className="w-3 h-3" style={{ color: 'var(--orange)' }} />
             <span>Class of {alum.graduationYear}</span>
           </div>
@@ -47,7 +47,7 @@ export default function AlumniCard({ alum }) {
               <span
                 key={tag}
                 className="text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 border"
-                style={{ borderColor: 'var(--border-muted)', color: 'var(--fg)', fontFamily: 'JetBrains Mono, monospace' }}
+                style={{ borderColor: 'var(--border-muted)', color: 'var(--fg)', fontFamily: "'Norwester', Impact, 'Arial Narrow', sans-serif" }}
               >
                 {tag}
               </span>

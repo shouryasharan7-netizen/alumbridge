@@ -46,7 +46,7 @@ export default function Sitemap() {
                 <link.icon className="w-5 h-5" style={{ color: 'var(--crimson)' }} />
               </div>
               <div>
-                <h3 className="font-bold text-sm" style={{ color: 'var(--fg)', fontFamily: 'system-ui' }}>{link.label}</h3>
+                <h3 className="font-bold text-sm" style={{ color: 'var(--fg)', fontFamily: "'Norwester', Impact, 'Arial Narrow', sans-serif" }}>{link.label}</h3>
                 <p className="font-mono text-[9px]" style={{ color: 'var(--subtle-text)' }}>{link.desc}</p>
               </div>
               <ArrowRight className="w-4 h-4 ml-auto flex-shrink-0" style={{ color: 'var(--subtle-text)' }} />
@@ -101,7 +101,7 @@ export default function Sitemap() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
           {Object.entries(byUni).sort(([a], [b]) => a.localeCompare(b)).map(([uni, progs]) => (
             <div key={uni} className="p-3 border" style={{ borderColor: 'var(--border-muted)', background: 'var(--card)' }}>
-              <h4 className="font-bold text-xs mb-1.5 flex items-center gap-1" style={{ color: 'var(--fg)', fontFamily: 'system-ui' }}>
+              <h4 className="font-bold text-xs mb-1.5 flex items-center gap-1" style={{ color: 'var(--fg)', fontFamily: "'Norwester', Impact, 'Arial Narrow', sans-serif" }}>
                 {progs[0].flag} {uni}
               </h4>
               <div className="space-y-0.5">

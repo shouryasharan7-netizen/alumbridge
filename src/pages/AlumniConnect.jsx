@@ -74,7 +74,7 @@ export default function AlumniConnect() {
         <div className="px-8 py-8 border-b-2" style={{ borderColor: 'var(--border-muted)', background: 'var(--card-alt)' }}>
           <div className="ref-code mb-3">[ALUM_{alum.id.toUpperCase()}]</div>
           <div className="flex items-center gap-5">
-            <div className="w-20 h-20 flex items-center justify-center text-2xl font-bold border-2" style={{ borderColor: 'var(--border-color)', background: 'var(--card)', color: 'var(--fg)', fontFamily: 'Anton, sans-serif' }}>
+            <div className="w-20 h-20 flex items-center justify-center text-2xl font-bold border-2" style={{ borderColor: 'var(--border-color)', background: 'var(--card)', color: 'var(--fg)', fontFamily: "'Norwester', Impact, 'Arial Narrow', sans-serif" }}>
               {initials}
             </div>
             <div>

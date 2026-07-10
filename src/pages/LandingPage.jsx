@@ -288,7 +288,7 @@ export default function LandingPage() {
             <h2 className="font-display text-2xl md:text-3xl tracking-wide" style={{ color: 'var(--fg)' }}>HOW DO THEY COMPARE?</h2>
           </div>
           <div className="overflow-x-auto border-2" style={{ borderColor: 'var(--border-color)', boxShadow: '4px 4px 0px 0px var(--border-color)' }}>
-            <table className="w-full min-w-[600px] text-sm" style={{ fontFamily: 'JetBrains Mono, monospace' }}>
+            <table className="w-full min-w-[600px] text-sm" style={{ fontFamily: "'Norwester', Impact, 'Arial Narrow', sans-serif" }}>
               <thead>
                 <tr style={{ background: 'var(--card)', borderBottom: '2px solid var(--border-color)' }}>
                   <th className="text-left py-4 px-5 font-display text-xs tracking-wide" style={{ color: 'var(--fg)' }}>METRIC</th>

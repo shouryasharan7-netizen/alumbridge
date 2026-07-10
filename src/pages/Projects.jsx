@@ -187,7 +187,7 @@ function ProjectCard({ project: p, expanded, onToggle }) {
             {p.author.split(' ').map(n => n[0]).join('')}
           </div>
           <div>
-            <p className="font-bold text-[11px]" style={{ color: 'var(--fg)', fontFamily: 'system-ui' }}>{p.author}</p>
+            <p className="font-bold text-[11px]" style={{ color: 'var(--fg)', fontFamily: "'Norwester', Impact, 'Arial Narrow', sans-serif" }}>{p.author}</p>
             <p className="font-mono text-[9px]" style={{ color: 'var(--subtle-text)' }}>{p.role} · {p.university}</p>
           </div>
           <span className="ml-auto font-mono text-[9px] flex items-center gap-1" style={{ color: 'var(--muted-text)' }}>

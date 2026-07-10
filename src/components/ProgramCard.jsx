@@ -42,7 +42,7 @@ export default function ProgramCard({ program, onShortlist, isShortlisted }) {
       </div>
 
       {/* Stats */}
-      <div className="p-5 space-y-3" style={{ fontFamily: 'JetBrains Mono, monospace' }}>
+      <div className="p-5 space-y-3" style={{ fontFamily: "'Norwester', Impact, 'Arial Narrow', sans-serif" }}>
         <div className="flex items-center justify-between">
           <span className="text-[10px] font-bold uppercase tracking-wider" style={{ color: 'var(--subtle-text)' }}>{program.country}</span>
           <div className="text-right">

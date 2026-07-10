@@ -128,7 +128,7 @@ export default function ChatBot() {
                     : <User className="w-3.5 h-3.5" style={{ color: 'var(--fg)' }} />
                   }
                 </div>
-                <div className="max-w-[80%] border-2 px-4 py-2.5 text-xs leading-relaxed" style={{ borderColor: 'var(--border-color)', background: 'var(--card)', color: 'var(--fg)', fontFamily: 'JetBrains Mono, monospace' }}>
+                <div className="max-w-[80%] border-2 px-4 py-2.5 text-xs leading-relaxed" style={{ borderColor: 'var(--border-color)', background: 'var(--card)', color: 'var(--fg)', fontFamily: "'Norwester', Impact, 'Arial Narrow', sans-serif" }}>
                   {msg.role === 'bot' ? (
                     <div dangerouslySetInnerHTML={{ __html: formatMessage(msg.content) }} />
                   ) : (

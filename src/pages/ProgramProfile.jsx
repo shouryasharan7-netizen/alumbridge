@@ -146,7 +146,7 @@ export default function ProgramProfile() {
                 return (
                   <div key={alum.id} className="border-2 p-4" style={{ borderColor: 'var(--border-muted)', background: 'var(--card-alt)' }}>
                     <div className="flex items-center gap-3 mb-2">
-                      <div className="w-8 h-8 flex items-center justify-center text-xs font-bold border-2" style={{ borderColor: 'var(--border-color)', background: 'var(--card)', color: 'var(--fg)', fontFamily: 'JetBrains Mono, monospace' }}>
+                      <div className="w-8 h-8 flex items-center justify-center text-xs font-bold border-2" style={{ borderColor: 'var(--border-color)', background: 'var(--card)', color: 'var(--fg)', fontFamily: "'Norwester', Impact, 'Arial Narrow', sans-serif" }}>
                         {initials}
                       </div>
                       <div>

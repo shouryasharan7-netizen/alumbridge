@@ -242,7 +242,7 @@ export default function Programs() {
             </button>
           </div>
           <div className="overflow-x-auto">
-            <table className="w-full" style={{ fontFamily: 'JetBrains Mono, monospace' }}>
+            <table className="w-full" style={{ fontFamily: "'Norwester', Impact, 'Arial Narrow', sans-serif" }}>
               <thead>
                 <tr style={{ background: 'var(--card)', borderBottom: '2px solid var(--border-color)' }}>
                   <th className="text-left px-5 py-4 font-display text-[10px] tracking-wider w-44" style={{ color: 'var(--fg)' }}>METRIC</th>
