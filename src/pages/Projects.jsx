@@ -72,9 +72,9 @@ export default function Projects() {
           value={search}
           onChange={(e) => { setSearch(e.target.value); setVisibleCount(PAGE_SIZE) }}
           placeholder="Search projects, authors, universities, tags..."
-          className="brutal-input w-full pl-10 pr-4"
+          className="brutal-input search-icon w-full pr-4"
         />
-        <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4" style={{ color: 'var(--subtle-text)' }} />
+        <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 pointer-events-none" style={{ color: 'var(--subtle-text)' }} />
       </div>
 
       {/* Filters */}

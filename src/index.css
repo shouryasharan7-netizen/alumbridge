@@ -162,6 +162,9 @@ h1, h2, h3, h4, h5, h6 {
   background-position: right 12px center;
   cursor: pointer;
 }
+.brutal-input.search-icon {
+  padding-left: 44px;
+}
 .brutal-input::placeholder {
   color: var(--subtle-text);
 }

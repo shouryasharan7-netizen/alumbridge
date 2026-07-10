@@ -128,9 +128,9 @@ export default function Programs() {
             placeholder="Search program, university, country, recruiter..."
             value={search}
             onChange={(e) => handleSearch(e.target.value)}
-            className="brutal-input w-full pl-10 pr-16"
+            className="brutal-input search-icon w-full pr-16"
           />
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4" style={{ color: 'var(--subtle-text)' }} />
+          <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 pointer-events-none" style={{ color: 'var(--subtle-text)' }} />
           <button
             className="absolute right-0 top-0 bottom-0 px-4 flex items-center justify-center border-l-2 transition-all duration-150 hover:brightness-110"
             style={{ background: 'var(--orange)', borderColor: 'var(--border-color)', color: 'var(--fg)' }}
