@@ -13,6 +13,7 @@ export default function Navbar() {
     { to: '/programs', label: 'Programs' },
     { to: '/alumni', label: 'Alumni' },
     { to: '/projects', label: 'Projects' },
+    { to: '/mentor', label: 'Mentor' },
   ]
 
   const isActive = (path) => path === '/' ? location.pathname === '/' : location.pathname.startsWith(path)

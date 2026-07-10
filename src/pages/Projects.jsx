@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Search, ChevronDown, Heart, MessageCircle, Eye, Github, ExternalLink, MapPin, GraduationCap, Tag, Users, Briefcase, Filter, Rocket, X } from 'lucide-react'
+import { Search, ChevronDown, Heart, MessageCircle, Eye, Github, ExternalLink, MapPin, GraduationCap, Tag, Users, Briefcase, Filter, Rocket, X, UserPlus, Check } from 'lucide-react'
 import { projects } from '../data/projects'
 
 const PAGE_SIZE = 12
@@ -144,6 +144,8 @@ export default function Projects() {
 
 function ProjectCard({ project: p, expanded, onToggle }) {
   const statusColor = STATUS_COLORS[p.status] || STATUS_COLORS['Active']
+  const [showHireModal, setShowHireModal] = useState(false)
+  const [hired, setHired] = useState(false)
 
   return (
     <div className="brutal-card group transition-all duration-200 hover:-translate-y-0.5 overflow-hidden" style={{ boxShadow: '3px 3px 0px 0px var(--border-color)' }}>
@@ -224,9 +226,62 @@ function ProjectCard({ project: p, expanded, onToggle }) {
             <button className="btn-brutal btn-primary text-[9px]" style={{ padding: '6px 14px' }}>
               <Users className="w-3 h-3" /> CONNECT
             </button>
+            <button
+              onClick={() => setShowHireModal(true)}
+              className="btn-brutal text-[9px]"
+              style={{
+                padding: '6px 14px',
+                background: hired ? '#16a34a' : 'var(--card-alt)',
+                border: '2px solid var(--border-color)',
+                boxShadow: '2px 2px 0px 0px var(--border-color)',
+                color: hired ? '#fff' : 'var(--fg)',
+              }}
+            >
+              {hired ? <><Check className="w-3 h-3" /> HIRED</> : <><UserPlus className="w-3 h-3" /> HIRE INTERN</>}
+            </button>
           </div>
         </div>
       </div>
+      {/* Hire Modal */}
+      {showHireModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4" style={{ background: 'rgba(0,0,0,0.6)' }}>
+          <div className="border-2 max-w-md w-full animate-slide-up" style={{ borderColor: 'var(--border-color)', background: 'var(--card)', boxShadow: '6px 6px 0px 0px var(--border-color)' }}>
+            <div className="flex items-center justify-between px-5 py-3 border-b-2" style={{ borderColor: 'var(--border-color)', background: 'var(--card-alt)' }}>
+              <h3 className="font-display text-sm tracking-widest uppercase" style={{ color: 'var(--fg)' }}>
+                <Briefcase className="w-4 h-4 inline mr-2" /> HIRE AS INTERN
+              </h3>
+              <button onClick={() => setShowHireModal(false)} className="w-7 h-7 flex items-center justify-center border-2 transition-all hover:-translate-y-0.5" style={{ borderColor: 'var(--border-color)', background: 'var(--card)', color: 'var(--fg)' }}>
+                <X className="w-3.5 h-3.5" />
+              </button>
+            </div>
+            <div className="p-5">
+              <div className="border-2 p-3 mb-4" style={{ borderColor: 'var(--border-muted)', background: 'var(--card-alt)' }}>
+                <p className="font-display text-[12px] tracking-wide" style={{ color: 'var(--fg)' }}>{p.title}</p>
+                <p className="font-mono text-[9px] mt-1" style={{ color: 'var(--muted-text)' }}>by {p.author} · {p.university} · {p.course}</p>
+              </div>
+              <p className="font-serif text-xs leading-relaxed mb-4" style={{ color: 'var(--muted-text)' }}>
+                Offer {p.author} an unpaid internship at your company based on this project. You'll earn <span className="font-bold" style={{ color: 'var(--orange)' }}>+25 mentorship points</span> and unlock the Talent Scout badge.
+              </p>
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={() => { setHired(true); setShowHireModal(false) }}
+                  className="btn-brutal btn-primary text-[10px] flex-1 justify-center"
+                  style={{ padding: '10px 20px' }}
+                >
+                  <Check className="w-3.5 h-3.5" /> CONFIRM INTERNSHIP OFFER
+                </button>
+                <button
+                  onClick={() => setShowHireModal(false)}
+                  className="btn-brutal text-[10px]"
+                  style={{ padding: '10px 16px', background: 'var(--card-alt)', border: '2px solid var(--border-color)', boxShadow: '2px 2px 0px 0px var(--border-color)', color: 'var(--fg)' }}
+                >
+                  CANCEL
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   )
 }

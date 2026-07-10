@@ -54,6 +54,7 @@ export default function Footer() {
               <li><Link to="/programs" className="hover:underline" style={{ color: 'var(--fg)' }}>Browse Programs</Link></li>
               <li><Link to="/alumni" className="hover:underline" style={{ color: 'var(--fg)' }}>Alumni Network</Link></li>
               <li><Link to="/projects" className="hover:underline" style={{ color: 'var(--fg)' }}>Student Projects</Link></li>
+              <li><Link to="/mentor" className="hover:underline" style={{ color: 'var(--fg)' }}>Mentor Dashboard</Link></li>
               <li><Link to="/sitemap" className="hover:underline" style={{ color: 'var(--fg)' }}>Site Map</Link></li>
             </ul>
           </div>

@@ -9,6 +9,7 @@ import ProgramProfile from './pages/ProgramProfile'
 import AlumniConnect from './pages/AlumniConnect'
 import AlumniListing from './pages/AlumniListing'
 import Projects from './pages/Projects'
+import MentorDashboard from './pages/MentorDashboard'
 import Sitemap from './pages/Sitemap'
 
 function App() {
@@ -24,6 +25,7 @@ function App() {
             <Route path="/alumni" element={<AlumniListing />} />
             <Route path="/alumni/:id" element={<AlumniConnect />} />
             <Route path="/projects" element={<Projects />} />
+            <Route path="/mentor" element={<MentorDashboard />} />
             <Route path="/sitemap" element={<Sitemap />} />
           </Routes>
         </main>
