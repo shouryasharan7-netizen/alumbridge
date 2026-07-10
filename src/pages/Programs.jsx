@@ -181,37 +181,6 @@ export default function Programs() {
         </div>
       </div>
 
-      {/* Country Pills (quick access) */}
-      <div className="flex flex-wrap gap-2 mb-6">
-        <button
-          onClick={() => handleCountry('all')}
-          className="font-mono text-[10px] font-bold uppercase tracking-wider px-3 py-2 border-2 transition-all duration-150 hover:-translate-y-0.5"
-          style={{
-            background: countryFilter === 'all' ? 'var(--fg)' : 'transparent',
-            color: countryFilter === 'all' ? 'var(--bg)' : 'var(--fg)',
-            borderColor: 'var(--border-color)',
-            boxShadow: countryFilter === 'all' ? '2px 2px 0px 0px var(--border-color)' : 'none',
-          }}
-        >🌍 ALL</button>
-        {countries.map(country => {
-          const flag = programs.find(p => p.country === country)?.flag
-          const active = countryFilter === country.toLowerCase()
-          return (
-            <button
-              key={country}
-              onClick={() => handleCountry(active ? 'all' : country.toLowerCase())}
-              className="font-mono text-[10px] font-bold uppercase tracking-wider px-3 py-2 border-2 transition-all duration-150 hover:-translate-y-0.5"
-              style={{
-                background: active ? 'var(--crimson)' : 'transparent',
-                color: active ? '#fff' : 'var(--fg)',
-                borderColor: 'var(--border-color)',
-                boxShadow: active ? '2px 2px 0px 0px var(--border-color)' : 'none',
-              }}
-            >{flag} {country}</button>
-          )
-        })}
-      </div>
-
       {/* Results bar */}
       <div className="flex items-center gap-3 mb-5 flex-wrap">
         <span className="font-mono text-[10px] font-bold uppercase tracking-wider" style={{ color: 'var(--muted-text)' }}>
@@ -328,7 +297,7 @@ function ProgramCardCompare({ program, onShortlist, isShortlisted, maxReached })
             <p className="font-mono text-[9px] uppercase tracking-wider mt-0.5" style={{ color: 'var(--muted-text)' }}>{program.university}</p>
           </div>
         </div>
-        <span className="font-mono text-[9px] font-bold px-2 py-1 border-2" style={{ borderColor: 'var(--border-color)', background: 'var(--card-alt)', color: 'var(--muted-text)' }}>{program.degree}</span>
+        <span className="font-mono text-[9px] font-bold px-2 py-1 border-2 whitespace-nowrap flex-shrink-0" style={{ borderColor: 'var(--border-color)', background: 'var(--card-alt)', color: 'var(--muted-text)' }}>{program.degree}</span>
       </div>
       {/* Stats */}
       <div className="grid grid-cols-2 gap-2 mb-3">
@@ -342,9 +311,8 @@ function ProgramCardCompare({ program, onShortlist, isShortlisted, maxReached })
         </div>
       </div>
       <div className="flex items-center gap-2 mb-3">
-        <span className="font-mono text-[9px] px-2 py-0.5 border" style={{ borderColor: 'var(--border-muted)', color: 'var(--muted-text)' }}>{program.country}</span>
-        <span className="font-mono text-[9px] px-2 py-0.5 border" style={{ borderColor: 'var(--border-muted)', color: 'var(--muted-text)' }}>{program.duration}</span>
-        <span className="font-mono text-[9px] px-2 py-0.5 border" style={{ borderColor: 'var(--border-muted)', color: 'var(--muted-text)' }}>{program.placementStats.placementRate}</span>
+        <span className="font-mono text-[9px] px-2 py-0.5 border whitespace-nowrap flex-shrink-0" style={{ borderColor: 'var(--border-muted)', color: 'var(--muted-text)' }}>{program.duration}</span>
+        <span className="font-mono text-[9px] px-2 py-0.5 border whitespace-nowrap flex-shrink-0" style={{ borderColor: 'var(--border-muted)', color: 'var(--muted-text)' }}>{program.placementStats.placementRate}</span>
       </div>
       {/* Actions */}
       <div className="flex items-center gap-2">
