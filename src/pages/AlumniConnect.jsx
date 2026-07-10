@@ -1,16 +1,27 @@
 import { useState } from 'react'
 import { useParams, Link } from 'react-router-dom'
-import { ArrowLeft, Briefcase, Calendar, MapPin, MessageSquare, Phone, Send, CheckCircle2, Clock } from 'lucide-react'
+import { ArrowLeft, Briefcase, Calendar, MapPin, MessageSquare, Phone, Send, CheckCircle2, Clock, Check, Shield } from 'lucide-react'
 import { alumni } from '../data/alumni'
 import { programs } from '../data/programs'
 
-const TIME_SLOTS = [
-  { day: 'Mon', times: ['10:00 AM', '2:00 PM', '5:00 PM'] },
-  { day: 'Tue', times: ['11:00 AM', '3:00 PM'] },
-  { day: 'Wed', times: ['10:00 AM', '4:00 PM', '6:00 PM'] },
-  { day: 'Thu', times: ['2:00 PM', '5:00 PM'] },
-  { day: 'Fri', times: ['10:00 AM', '11:00 AM'] },
-]
+const TIME_SLOTS = ['9:00 AM', '10:30 AM', '12:00 PM', '2:00 PM', '3:30 PM', '5:00 PM', '6:30 PM']
+
+function getNext7Days() {
+  const days = []
+  const today = new Date()
+  for (let i = 1; i <= 7; i++) {
+    const d = new Date(today)
+    d.setDate(today.getDate() + i)
+    days.push({
+      key: d.toISOString().split('T')[0],
+      day: d.toLocaleDateString('en-US', { weekday: 'short' }),
+      month: d.toLocaleDateString('en-US', { month: 'short' }),
+      date: d.getDate(),
+      year: d.getFullYear(),
+    })
+  }
+  return days
+}
 
 export default function AlumniConnect() {
   const { id } = useParams()
@@ -19,6 +30,11 @@ export default function AlumniConnect() {
   const [submitted, setSubmitted] = useState(false)
   const [bookingConfirmed, setBookingConfirmed] = useState(null)
   const [form, setForm] = useState({ name: '', email: '', question: '' })
+  const [showTooltip, setShowTooltip] = useState(false)
+
+  const days = getNext7Days()
+  const [selectedDate, setSelectedDate] = useState(days[0]?.key || '')
+  const [selectedTime, setSelectedTime] = useState(null)
 
   if (!alum) {
     return (
@@ -40,9 +56,12 @@ export default function AlumniConnect() {
     }
   }
 
-  const handleBook = (day, time) => {
-    setBookingConfirmed({ day, time })
-    setTimeout(() => setBookingConfirmed(null), 4000)
+  const handleBook = () => {
+    if (selectedDate && selectedTime) {
+      const dayObj = days.find(d => d.key === selectedDate)
+      setBookingConfirmed({ day: dayObj ? `${dayObj.day}, ${dayObj.month} ${dayObj.date}` : selectedDate, time: selectedTime })
+      setTimeout(() => setBookingConfirmed(null), 4000)
+    }
   }
 
   return (
@@ -60,7 +79,27 @@ export default function AlumniConnect() {
               {initials}
             </div>
             <div>
-              <h1 className="font-display text-2xl font-bold">{alum.name}</h1>
+              <div className="flex items-center gap-2 flex-wrap">
+                <h1 className="font-display text-2xl font-bold">{alum.name}</h1>
+                {/* Verified Badge */}
+                <div className="relative inline-block"
+                  onMouseEnter={() => setShowTooltip(true)}
+                  onMouseLeave={() => setShowTooltip(false)}
+                >
+                  <span className="inline-flex items-center gap-1 bg-emerald-500/90 text-white text-[10px] font-bold px-2 py-0.5 rounded-full cursor-help">
+                    <Check className="w-3 h-3" /> Verified
+                  </span>
+                  {showTooltip && (
+                    <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 bg-primary-700 text-white text-xs px-3 py-2 rounded-lg shadow-lg whitespace-nowrap z-20">
+                      <div className="flex items-center gap-1.5">
+                        <Shield className="w-3 h-3 text-gold-400" />
+                        Verified via LinkedIn / University Email
+                      </div>
+                      <div className="absolute top-full left-1/2 -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-primary-700"></div>
+                    </div>
+                  )}
+                </div>
+              </div>
               <div className="flex items-center gap-1.5 text-primary-200 mt-1">
                 <Briefcase className="w-4 h-4" />
                 <span>{alum.currentRole} at {alum.company}</span>
@@ -157,7 +196,7 @@ export default function AlumniConnect() {
       {activeTab === 'call' && (
         <div className="bg-white rounded-2xl border border-primary-100/50 shadow-sm p-6">
           <h2 className="font-display text-lg font-bold text-primary-600 mb-1">Book a 15-min Call</h2>
-          <p className="text-sm text-primary-400 mb-6">Pick a time slot. {alum.name.split(' ')[0]} will call you.</p>
+          <p className="text-sm text-primary-400 mb-6">Pick a date and time. {alum.name.split(' ')[0]} will call you.</p>
 
           {bookingConfirmed ? (
             <div className="bg-emerald-50 border border-emerald-200 rounded-xl p-6 text-center">
@@ -168,23 +207,58 @@ export default function AlumniConnect() {
           ) : (
             <div>
               <div className="flex items-center gap-2 text-xs text-primary-400 mb-4">
-                <Clock className="w-3.5 h-3.5" /><span>All times in IST</span>
+                <Clock className="w-3.5 h-3.5" /><span>All times in IST · Select a date, then pick a time slot</span>
               </div>
-              <div className="grid grid-cols-2 sm:grid-cols-5 gap-3">
-                {TIME_SLOTS.map(({ day, times }) => (
-                  <div key={day} className="bg-cream rounded-xl p-3 text-center border border-primary-100/30">
-                    <p className="text-xs font-bold text-primary-400 uppercase mb-3">{day}</p>
-                    <div className="space-y-2">
-                      {times.map((time) => (
-                        <button key={time} onClick={() => handleBook(day, time)}
-                          className="w-full text-xs font-medium py-2 rounded-lg bg-white border border-primary-100/50 text-primary-600 hover:bg-crimson-50 hover:border-crimson-200 hover:text-crimson-600 transition-all duration-200">
-                          {time}
-                        </button>
-                      ))}
-                    </div>
-                  </div>
+
+              {/* Horizontal date picker */}
+              <div className="flex gap-2 overflow-x-auto pb-3 mb-4 scrollbar-thin">
+                {days.map((d) => (
+                  <button
+                    key={d.key}
+                    onClick={() => { setSelectedDate(d.key); setSelectedTime(null) }}
+                    className={`flex-shrink-0 flex flex-col items-center rounded-xl px-4 py-3 border transition-all duration-200 min-w-[72px] ${
+                      selectedDate === d.key
+                        ? 'bg-primary-600 text-white border-primary-600 shadow-md'
+                        : 'bg-white text-primary-500 border-primary-100 hover:border-crimson-200 hover:text-crimson-600'
+                    }`}
+                  >
+                    <span className="text-[10px] font-bold uppercase tracking-wide">{d.day}</span>
+                    <span className="text-lg font-bold mt-0.5">{d.date}</span>
+                    <span className="text-[10px]">{d.month}</span>
+                  </button>
                 ))}
               </div>
+
+              {/* Time slots grid */}
+              <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-7 gap-2">
+                {TIME_SLOTS.map((time) => (
+                  <button
+                    key={time}
+                    onClick={() => setSelectedTime(time)}
+                    className={`text-xs font-medium py-2.5 rounded-lg border transition-all duration-200 ${
+                      selectedTime === time
+                        ? 'bg-crimson-600 text-white border-crimson-600 shadow-sm'
+                        : 'bg-white text-primary-600 border-primary-100 hover:bg-crimson-50 hover:border-crimson-200 hover:text-crimson-600'
+                    }`}
+                  >
+                    {time}
+                  </button>
+                ))}
+              </div>
+
+              {/* Confirm button */}
+              <button
+                onClick={handleBook}
+                disabled={!selectedTime}
+                className={`mt-5 w-full font-semibold py-3 rounded-xl flex items-center justify-center gap-2 transition-all duration-300 shadow-sm ${
+                  selectedTime
+                    ? 'bg-crimson-600 text-white hover:bg-crimson-700 hover:shadow-md'
+                    : 'bg-primary-100 text-primary-300 cursor-not-allowed'
+                }`}
+              >
+                <Phone className="w-4 h-4" />
+                {selectedTime ? `Confirm Booking — ${selectedTime}` : 'Select a time slot to book'}
+              </button>
             </div>
           )}
         </div>

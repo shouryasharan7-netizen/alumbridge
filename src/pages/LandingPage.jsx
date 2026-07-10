@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import { BookOpen, Users, BarChart3, ArrowRight, Globe, Star, MessageCircle, Sparkles, ChevronRight, TrendingUp } from 'lucide-react'
+import { BookOpen, Users, BarChart3, ArrowRight, Globe, Star, Sparkles, ChevronRight } from 'lucide-react'
 import { programs } from '../data/programs'
 import { alumni } from '../data/alumni'
 import ProgramCard from '../components/ProgramCard'
@@ -241,37 +241,86 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* Quick Comparison Teaser */}
+      {/* Quick Comparison Teaser — Side-by-side Table */}
       <section className="py-16 bg-white">
         <div className="max-w-5xl mx-auto px-4">
           <div className="text-center mb-10">
             <h2 className="font-display text-2xl md:text-3xl font-bold text-primary-600 mb-2">At a glance: How do they compare?</h2>
             <p className="text-primary-400 text-sm">A sneak peek — use our full compare tool for detailed analysis</p>
           </div>
-          <div className="overflow-x-auto">
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 min-w-[600px]">
-              {[
-                { flag: "🇮🇳", name: "IIT Delhi CSE", avg: "22 LPA", fees: "~$10.8K", color: "from-primary-600 to-primary-700" },
-                { flag: "🇺🇸", name: "MIT EECS", avg: "$150K", fees: "~$232K", color: "from-crimson-600 to-crimson-700" },
-                { flag: "🇨🇭", name: "ETH Zurich", avg: "CHF 105K", fees: "~$2.5K", color: "from-primary-600 to-crimson-600" },
-                { flag: "🇸🇬", name: "NUS CS", avg: "S$72K", fees: "~$55K", color: "from-crimson-700 to-primary-700" },
-              ].map((item, i) => (
-                <div key={i} className="bg-parchment rounded-xl p-5 border border-primary-100/30 hover:border-gold-300 hover:shadow-md transition-all duration-300 hover:-translate-y-1">
-                  <span className="text-2xl">{item.flag}</span>
-                  <h4 className="font-display font-bold text-primary-600 text-sm mt-2">{item.name}</h4>
-                  <div className="mt-3 space-y-1.5">
-                    <div className="flex items-center gap-1.5 text-xs text-primary-500">
-                      <TrendingUp className="w-3 h-3 text-crimson-500" />
-                      <span>Avg: <strong className="text-primary-700">{item.avg}</strong></span>
+          <div className="overflow-x-auto rounded-2xl border border-primary-100/50 shadow-sm">
+            <table className="w-full min-w-[600px] text-sm">
+              <thead>
+                <tr className="bg-primary-600 text-white">
+                  <th className="text-left py-4 px-5 font-display text-sm font-semibold sticky left-0 bg-primary-600 z-10">Metric</th>
+                  <th className="py-4 px-5 text-center">
+                    <div className="flex flex-col items-center gap-1">
+                      <span className="text-xl">🇮🇳</span>
+                      <span className="font-display font-bold text-xs">IIT Delhi CSE</span>
                     </div>
-                    <div className="flex items-center gap-1.5 text-xs text-primary-500">
-                      <span className="text-gold-500">💰</span>
-                      <span>Fees: <strong className="text-primary-700">{item.fees}</strong></span>
+                  </th>
+                  <th className="py-4 px-5 text-center">
+                    <div className="flex flex-col items-center gap-1">
+                      <span className="text-xl">🇺🇸</span>
+                      <span className="font-display font-bold text-xs">MIT EECS</span>
                     </div>
-                  </div>
-                </div>
-              ))}
-            </div>
+                  </th>
+                  <th className="py-4 px-5 text-center">
+                    <div className="flex flex-col items-center gap-1">
+                      <span className="text-xl">🇨🇭</span>
+                      <span className="font-display font-bold text-xs">ETH Zurich CS</span>
+                    </div>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr className="border-b border-primary-50 bg-parchment">
+                  <td className="py-4 px-5 font-semibold text-primary-600 sticky left-0 bg-parchment z-10">💰 Tuition Fees</td>
+                  <td className="py-4 px-5 text-center">
+                    <span className="font-bold text-primary-700">~$10.8K</span>
+                    <p className="text-[10px] text-primary-400 mt-0.5">₹9,00,000 total</p>
+                  </td>
+                  <td className="py-4 px-5 text-center">
+                    <span className="font-bold text-primary-700">~$232K</span>
+                    <p className="text-[10px] text-primary-400 mt-0.5">$57,986/year</p>
+                  </td>
+                  <td className="py-4 px-5 text-center">
+                    <span className="font-bold text-primary-700">~$2.5K</span>
+                    <p className="text-[10px] text-primary-400 mt-0.5">CHF 2,190 total</p>
+                  </td>
+                </tr>
+                <tr className="border-b border-primary-50">
+                  <td className="py-4 px-5 font-semibold text-primary-600 sticky left-0 bg-white z-10">📈 Avg. Package</td>
+                  <td className="py-4 px-5 text-center">
+                    <span className="font-bold text-crimson-600">22 LPA</span>
+                    <p className="text-[10px] text-primary-400 mt-0.5">~$26.4K USD</p>
+                  </td>
+                  <td className="py-4 px-5 text-center">
+                    <span className="font-bold text-crimson-600">$150K</span>
+                    <p className="text-[10px] text-primary-400 mt-0.5">Top tier globally</p>
+                  </td>
+                  <td className="py-4 px-5 text-center">
+                    <span className="font-bold text-crimson-600">CHF 105K</span>
+                    <p className="text-[10px] text-primary-400 mt-0.5">~$120K USD</p>
+                  </td>
+                </tr>
+                <tr>
+                  <td className="py-4 px-5 font-semibold text-primary-600 sticky left-0 bg-parchment z-10">🎯 Acceptance Rate</td>
+                  <td className="py-4 px-5 text-center">
+                    <span className="font-bold text-primary-700">&lt;2%</span>
+                    <p className="text-[10px] text-primary-400 mt-0.5">via JEE Advanced</p>
+                  </td>
+                  <td className="py-4 px-5 text-center">
+                    <span className="font-bold text-primary-700">~4%</span>
+                    <p className="text-[10px] text-primary-400 mt-0.5">Holistic review</p>
+                  </td>
+                  <td className="py-4 px-5 text-center">
+                    <span className="font-bold text-primary-700">~27%</span>
+                    <p className="text-[10px] text-primary-400 mt-0.5">Academic focus</p>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
           </div>
           <div className="text-center mt-8">
             <Link to="/compare" className="inline-flex items-center gap-2 bg-primary-600 text-white font-semibold px-6 py-3 rounded-xl hover:bg-crimson-600 transition-all duration-300 shadow-sm hover:shadow-md">

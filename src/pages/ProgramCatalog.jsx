@@ -60,14 +60,21 @@ export default function ProgramCatalog() {
       {/* Search & Filters */}
       <div className="flex flex-col sm:flex-row gap-3 mb-6">
         <div className="relative flex-1">
-          <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-primary-300" />
           <input
             type="text"
             placeholder="Search by program, university, or country..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-full pl-10 pr-4 py-3 border border-primary-100 rounded-xl bg-white focus:outline-none focus:ring-2 focus:ring-crimson-500 focus:border-transparent text-sm placeholder:text-primary-300 transition-shadow"
+            onKeyDown={(e) => e.key === 'Enter' && e.preventDefault()}
+            className="w-full pl-4 pr-14 py-3 border border-primary-100 rounded-xl bg-white focus:outline-none focus:ring-2 focus:ring-crimson-500 focus:border-transparent text-sm placeholder:text-primary-300 transition-shadow"
           />
+          <button
+            onClick={() => {}}
+            className="absolute right-2 top-1/2 -translate-y-1/2 bg-primary-600 hover:bg-primary-700 text-white p-2 rounded-lg transition-colors shadow-sm"
+            aria-label="Search"
+          >
+            <Search className="w-4 h-4" />
+          </button>
         </div>
         <div className="flex items-center gap-2">
           <Filter className="w-4 h-4 text-primary-400" />

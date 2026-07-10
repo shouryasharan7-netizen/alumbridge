@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { Clock, TrendingUp, BookOpen, MapPin } from 'lucide-react'
+import { Clock, TrendingUp, BookOpen, MapPin, DollarSign } from 'lucide-react'
 
 export default function ProgramCard({ program, onShortlist, isShortlisted }) {
   const handleShortlist = (e) => {
@@ -7,6 +7,8 @@ export default function ProgramCard({ program, onShortlist, isShortlisted }) {
     e.stopPropagation()
     if (onShortlist) onShortlist(program.id)
   }
+
+  const isForeignCurrency = !['INR', 'USD'].includes(program.fees.currency)
 
   return (
     <Link
@@ -37,22 +39,27 @@ export default function ProgramCard({ program, onShortlist, isShortlisted }) {
         )}
       </div>
 
-      {/* Stats */}
+      {/* Stats with bold metrics */}
       <div className="p-5 space-y-3">
         <div className="flex items-center justify-between">
           <span className="text-xs font-medium text-primary-400 uppercase tracking-wide">{program.country}</span>
-          <span className="text-xs text-gold-600 font-medium">{program.fees.usdEquiv}</span>
+          <div className="text-right">
+            <span className="text-xs font-semibold text-gold-600">{program.fees.localTotal}</span>
+            {isForeignCurrency && (
+              <p className="text-[10px] text-primary-400 mt-0.5">{program.fees.usdEquiv}</p>
+            )}
+          </div>
         </div>
         <div className="flex items-center gap-2 text-sm text-primary-600/80">
-          <TrendingUp className="w-4 h-4 text-crimson-500" />
-          <span>Avg. Package: <strong className="text-primary-600">{program.placementStats.avgPackage}</strong></span>
+          <TrendingUp className="w-4 h-4 text-crimson-500 flex-shrink-0" />
+          <span>Avg. Package: <strong className="text-primary-700 font-semibold">{program.placementStats.avgPackage}</strong></span>
         </div>
         <div className="flex items-center gap-2 text-sm text-primary-600/80">
-          <Clock className="w-4 h-4 text-gold-500" />
-          <span>{program.duration} &middot; {program.placementStats.placementRate} placed</span>
+          <Clock className="w-4 h-4 text-gold-500 flex-shrink-0" />
+          <span>Duration: <strong className="text-primary-700 font-semibold">{program.duration}</strong> &middot; <strong className="text-primary-700 font-semibold">{program.placementStats.placementRate}</strong> placed</span>
         </div>
         <div className="flex items-center gap-2 text-sm text-primary-600/80">
-          <BookOpen className="w-4 h-4 text-primary-400" />
+          <BookOpen className="w-4 h-4 text-primary-400 flex-shrink-0" />
           <span className="truncate">{program.testsRequired.join(', ')}</span>
         </div>
       </div>
