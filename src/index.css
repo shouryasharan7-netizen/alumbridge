@@ -1,3 +1,215 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ── CSS Custom Properties ── */
+:root {
+  --bg: #eae8e4;
+  --fg: #120f0a;
+  --card: #ffffff;
+  --card-alt: #faf8f5;
+  --crimson: #97192c;
+  --orange: #fc920d;
+  --border-color: #120f0a;
+  --border-muted: rgba(18, 15, 10, 0.15);
+  --muted-text: rgba(18, 15, 10, 0.6);
+  --subtle-text: rgba(18, 15, 10, 0.4);
+}
+
+.dark {
+  --bg: #120f0a;
+  --fg: #fee9cf;
+  --card: #1e0509;
+  --card-alt: #120f0a;
+  --crimson: #97192c;
+  --orange: #fc920d;
+  --border-color: #fee9cf;
+  --border-muted: rgba(254, 233, 207, 0.15);
+  --muted-text: rgba(254, 233, 207, 0.6);
+  --subtle-text: rgba(254, 233, 207, 0.4);
+}
+
+/* ── Global Styles ── */
+* {
+  transition: color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+              background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+              border-color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+body {
+  margin: 0;
+  font-family: 'JetBrains Mono', system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: var(--bg);
+  color: var(--fg);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Anton', Impact, 'Arial Narrow', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+/* ── Blueprint Dot Grid Background ── */
+.blueprint-bg {
+  position: relative;
+}
+.blueprint-bg::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(var(--fg) 1px, transparent 1px);
+  background-size: 16px 16px;
+  opacity: 0.06;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ── Section Shell ── */
+.section-shell {
+  position: relative;
+  padding: 24px 16px;
+}
+@media (min-width: 640px) {
+  .section-shell { padding: 40px 24px; }
+}
+@media (min-width: 768px) {
+  .section-shell { padding: 56px 32px; }
+}
+
+/* ── Brutalist Button ── */
+.btn-brutal {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: 2px solid var(--border-color);
+  border-radius: 0;
+  box-shadow: 2px 2px 0px 0px var(--border-color);
+  font-size: 12px;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  cursor: pointer;
+  transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.btn-brutal:hover {
+  transform: translateY(-2px);
+  box-shadow: 3px 3px 0px 0px var(--border-color);
+}
+.btn-brutal:active {
+  transform: translateY(2px);
+  box-shadow: none;
+}
+
+.btn-primary {
+  background-color: var(--orange);
+  color: var(--fg);
+  padding: 10px 24px;
+}
+.btn-primary:hover {
+  background-color: #e6830b;
+}
+
+.btn-secondary {
+  background-color: var(--card-alt);
+  color: var(--fg);
+  padding: 10px 24px;
+  border-width: 1px;
+  box-shadow: 4px 4px 0px 0px var(--border-color);
+}
+.btn-secondary:hover {
+  box-shadow: 6px 6px 0px 0px var(--border-color);
+}
+
+/* ── Brutalist Card ── */
+.brutal-card {
+  background-color: var(--card-alt);
+  border: 1px solid var(--border-muted);
+  border-radius: 0;
+  transition: border-color 0.2s;
+}
+.brutal-card:hover {
+  border-color: var(--border-color);
+}
+
+/* ── Brutalist Input ── */
+.brutal-input {
+  background-color: var(--card);
+  color: var(--fg);
+  border: 2px solid var(--border-color);
+  border-radius: 0;
+  padding: 10px 16px;
+  font-size: 13px;
+  font-family: 'JetBrains Mono', monospace;
+  outline: none;
+  box-shadow: 2px 2px 0px 0px var(--border-color);
+  transition: all 0.15s;
+}
+.brutal-input::placeholder {
+  color: var(--subtle-text);
+}
+.brutal-input:focus {
+  box-shadow: 3px 3px 0px 0px var(--orange);
+  border-color: var(--orange);
+}
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+  border-radius: 0;
+}
+
+/* ── Custom Cursor ── */
+/* The cursor is handled via a React component */
+
+/* ── Reference Code Style ── */
+.ref-code {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.5px;
+  color: var(--subtle-text);
+}
+
+/* ── Noise Texture ── */
+.noise-overlay {
+  position: relative;
+}
+.noise-overlay::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  opacity: 0.04;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+}
+
+/* ── Marquee ── */
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee 30s linear infinite;
+}
+.marquee-track:hover {
+  animation-play-state: paused;
+}
+
+@keyframes marquee {
+  0% { transform: translateX(0%); }
+  100% { transform: translateX(-50%); }
+}
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap');
 
 @tailwind base;

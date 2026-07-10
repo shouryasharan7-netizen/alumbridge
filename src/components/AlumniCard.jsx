@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { Briefcase, Calendar, ChevronRight } from 'lucide-react'
+import { Briefcase, Calendar, ArrowRight, Check } from 'lucide-react'
 
 export default function AlumniCard({ alum }) {
   const initials = alum.name
@@ -8,40 +8,37 @@ export default function AlumniCard({ alum }) {
     .join('')
     .toUpperCase()
 
-  const colors = [
-    'from-primary-500 to-primary-700',
-    'from-crimson-500 to-crimson-700',
-    'from-primary-600 to-crimson-600',
-    'from-gold-500 to-gold-700',
-    'from-crimson-400 to-primary-600',
-  ]
-  const colorIndex = alum.id.charCodeAt(1) % colors.length
-
   return (
     <Link
       to={`/alumni/${alum.id}`}
-      className="bg-white rounded-xl shadow-sm hover:shadow-lg border border-primary-100/50 hover:border-gold-300 transition-all duration-300 p-4 group"
+      className="brutal-card block p-4 transition-all duration-200 hover:-translate-y-0.5"
+      style={{ boxShadow: '3px 3px 0px 0px var(--border-color)' }}
     >
-      <div className="flex items-start gap-3.5">
-        <div className={`w-11 h-11 rounded-full bg-gradient-to-br ${colors[colorIndex]} flex items-center justify-center text-white font-bold text-sm flex-shrink-0 ring-2 ring-white shadow-sm`}>
+      <div className="flex items-start gap-3">
+        <div className="w-11 h-11 flex items-center justify-center text-sm font-bold flex-shrink-0 border-2"
+          style={{ borderColor: 'var(--border-color)', background: 'var(--card)', color: 'var(--fg)', fontFamily: 'JetBrains Mono, monospace' }}>
           {initials}
         </div>
 
         <div className="flex-1 min-w-0">
-          <div className="flex items-center justify-between">
-            <h4 className="font-semibold text-primary-700 text-sm">{alum.name}</h4>
-            {alum.available && (
-              <span className="text-[10px] bg-emerald-50 text-emerald-700 px-2 py-0.5 rounded-full font-semibold ring-1 ring-emerald-200">
-                Available
-              </span>
-            )}
+          <div className="flex items-center justify-between gap-2">
+            <div className="flex items-center gap-2">
+              <h4 className="font-bold text-sm" style={{ color: 'var(--fg)', fontFamily: 'system-ui, sans-serif' }}>{alum.name}</h4>
+              {alum.available && (
+                <span className="inline-flex items-center gap-0.5 text-[9px] font-bold uppercase tracking-wider px-1.5 py-0.5 border"
+                  style={{ borderColor: '#059669', color: '#059669' }}>
+                  <Check className="w-2.5 h-2.5" /> Available
+                </span>
+              )}
+            </div>
+            <ArrowRight className="w-4 h-4 flex-shrink-0 transition-transform" style={{ color: 'var(--subtle-text)' }} />
           </div>
-          <div className="flex items-center gap-1 text-primary-500 text-xs mt-0.5">
-            <Briefcase className="w-3 h-3 text-crimson-400" />
-            <span className="truncate">{alum.currentRole} at <strong>{alum.company}</strong></span>
+          <div className="flex items-center gap-1 text-xs mt-1" style={{ color: 'var(--muted-text)', fontFamily: 'JetBrains Mono, monospace' }}>
+            <Briefcase className="w-3 h-3" style={{ color: 'var(--crimson)' }} />
+            <span className="truncate">{alum.currentRole} @ <strong>{alum.company}</strong></span>
           </div>
-          <div className="flex items-center gap-1 text-primary-400 text-xs mt-0.5">
-            <Calendar className="w-3 h-3 text-gold-500" />
+          <div className="flex items-center gap-1 text-xs mt-0.5" style={{ color: 'var(--subtle-text)', fontFamily: 'JetBrains Mono, monospace' }}>
+            <Calendar className="w-3 h-3" style={{ color: 'var(--orange)' }} />
             <span>Class of {alum.graduationYear}</span>
           </div>
 
@@ -49,15 +46,14 @@ export default function AlumniCard({ alum }) {
             {alum.expertise.slice(0, 3).map((tag) => (
               <span
                 key={tag}
-                className="text-[10px] bg-cream text-primary-600 px-2 py-0.5 rounded-full font-medium"
+                className="text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 border"
+                style={{ borderColor: 'var(--border-muted)', color: 'var(--fg)', fontFamily: 'JetBrains Mono, monospace' }}
               >
                 {tag}
               </span>
             ))}
           </div>
         </div>
-
-        <ChevronRight className="w-4 h-4 text-primary-200 group-hover:text-crimson-500 transition-all duration-200 flex-shrink-0 mt-1 group-hover:translate-x-0.5" />
       </div>
     </Link>
   )

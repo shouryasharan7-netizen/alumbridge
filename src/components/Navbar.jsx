@@ -1,71 +1,121 @@
 import { Link, useLocation } from 'react-router-dom'
-import { GraduationCap, Menu, X, Globe } from 'lucide-react'
+import { Menu, X, Sun, Moon, BookOpen } from 'lucide-react'
 import { useState } from 'react'
+import { useTheme } from '../context/ThemeContext'
 
 export default function Navbar() {
   const location = useLocation()
   const [mobileOpen, setMobileOpen] = useState(false)
+  const { dark, toggle } = useTheme()
 
   const links = [
+    { to: '/', label: 'Home' },
     { to: '/programs', label: 'Programs' },
     { to: '/compare', label: 'Compare' },
+    { to: '/alumni', label: 'Alumni' },
   ]
 
-  const isActive = (path) => location.pathname.startsWith(path)
+  const isActive = (path) => path === '/' ? location.pathname === '/' : location.pathname.startsWith(path)
 
   return (
-    <nav className="bg-white/90 backdrop-blur-md border-b border-primary-100 sticky top-0 z-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16">
+    <>
+      <nav className="fixed top-4 sm:top-6 left-3 right-3 sm:left-6 sm:right-6 z-50"
+        style={{
+          background: 'var(--bg)',
+          border: '3px solid var(--border-color)',
+          boxShadow: '4px 4px 0px 0px var(--border-color)',
+        }}
+      >
+        <div className="flex items-center justify-between px-4 sm:px-5 py-2.5">
+          {/* Logo */}
           <Link to="/" className="flex items-center gap-2.5 group">
-            <div className="w-9 h-9 bg-primary-600 rounded-lg flex items-center justify-center group-hover:bg-crimson-600 transition-colors duration-300">
-              <GraduationCap className="w-5 h-5 text-gold-400" />
+            <div className="w-9 h-9 flex items-center justify-center border-2 border-current"
+              style={{ borderColor: 'var(--border-color)', background: 'var(--card)' }}>
+              <BookOpen className="w-5 h-5" style={{ color: 'var(--crimson)' }} />
             </div>
-            <div>
-              <span className="font-display font-bold text-primary-600 text-lg leading-none">AlumBridge</span>
-              <span className="block text-[10px] text-gold-500 font-medium tracking-widest uppercase leading-none">Global Programs</span>
+            <div className="hidden sm:block">
+              <span className="font-display text-lg leading-none tracking-wide" style={{ color: 'var(--fg)' }}>ALUMBRIDGE</span>
+              <span className="block font-mono text-[9px] font-bold tracking-widest uppercase leading-none" style={{ color: 'var(--muted-text)' }}>
+                GLOBAL • PROGRAMS • DATA
+              </span>
             </div>
           </Link>
 
-          <div className="hidden md:flex items-center gap-8">
+          {/* Desktop Links */}
+          <div className="hidden md:flex items-center gap-6">
             {links.map((link) => (
               <Link
                 key={link.to}
                 to={link.to}
-                className={`text-sm font-medium transition-all duration-200 pb-0.5 border-b-2 ${
-                  isActive(link.to)
-                    ? 'text-crimson-600 border-crimson-600'
-                    : 'text-primary-600/70 border-transparent hover:text-primary-600 hover:border-gold-400'
-                }`}
+                className="text-sm font-bold transition-all duration-150"
+                style={{
+                  color: isActive(link.to) ? 'var(--orange)' : 'var(--fg)',
+                  fontFamily: 'system-ui, sans-serif',
+                  fontSize: '14px',
+                  letterSpacing: '0',
+                  textTransform: 'none',
+                }}
               >
                 {link.label}
               </Link>
             ))}
             <Link
               to="/programs"
-              className="inline-flex items-center gap-1.5 bg-primary-600 text-white text-sm font-medium px-5 py-2.5 rounded-lg hover:bg-crimson-600 transition-all duration-300 shadow-sm hover:shadow-md"
+              className="btn-brutal btn-primary text-[11px]"
+              style={{ padding: '8px 20px' }}
             >
-              <Globe className="w-3.5 h-3.5" />
-              Explore Programs
+              EXPLORE ALL
             </Link>
           </div>
 
-          <button
-            className="md:hidden p-2 text-primary-600"
-            onClick={() => setMobileOpen(!mobileOpen)}
-          >
-            {mobileOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-          </button>
+          {/* Right controls */}
+          <div className="flex items-center gap-2">
+            {/* Theme toggle */}
+            <button
+              onClick={toggle}
+              className="w-9 h-9 sm:w-10 sm:h-10 flex items-center justify-center transition-all duration-150 hover:-translate-y-0.5"
+              style={{
+                background: 'var(--card)',
+                border: '2px solid var(--border-color)',
+                boxShadow: '2px 2px 0px 0px var(--border-color)',
+              }}
+              aria-label="Toggle theme"
+            >
+              {dark ? (
+                <Sun className="w-4 h-4" style={{ color: 'var(--orange)' }} />
+              ) : (
+                <Moon className="w-4 h-4" style={{ color: 'var(--fg)' }} />
+              )}
+            </button>
+
+            {/* Mobile menu toggle */}
+            <button
+              className="md:hidden w-9 h-9 sm:w-10 sm:h-10 flex items-center justify-center transition-all duration-150"
+              style={{
+                background: 'var(--card)',
+                border: '2px solid var(--border-color)',
+                boxShadow: '2px 2px 0px 0px var(--border-color)',
+              }}
+              onClick={() => setMobileOpen(!mobileOpen)}
+            >
+              {mobileOpen ? <X className="w-5 h-5" style={{ color: 'var(--fg)' }} /> : <Menu className="w-5 h-5" style={{ color: 'var(--fg)' }} />}
+            </button>
+          </div>
         </div>
 
+        {/* Mobile menu */}
         {mobileOpen && (
-          <div className="md:hidden pb-4 border-t border-primary-100 animate-fade-in">
+          <div className="md:hidden border-t-2 px-4 py-3 animate-fade-in" style={{ borderColor: 'var(--border-muted)' }}>
             {links.map((link) => (
               <Link
                 key={link.to}
                 to={link.to}
                 onClick={() => setMobileOpen(false)}
-                className="block px-4 py-3 text-primary-600 hover:bg-cream hover:text-crimson-600 transition font-medium"
+                className="block py-3 font-bold text-sm transition-colors"
+                style={{
+                  color: isActive(link.to) ? 'var(--orange)' : 'var(--fg)',
+                  fontFamily: 'system-ui, sans-serif',
+                }}
               >
                 {link.label}
               </Link>
@@ -73,13 +123,16 @@ export default function Navbar() {
             <Link
               to="/programs"
               onClick={() => setMobileOpen(false)}
-              className="block mx-4 mt-2 text-center bg-primary-600 text-white font-medium px-4 py-2.5 rounded-lg hover:bg-crimson-600 transition"
+              className="btn-brutal btn-primary w-full mt-3 text-center text-[11px]"
             >
-              Explore Programs
+              EXPLORE ALL PROGRAMS
             </Link>
           </div>
         )}
-      </div>
-    </nav>
+      </nav>
+
+      {/* Spacer for fixed nav */}
+      <div className="h-20 sm:h-24" />
+    </>
   )
 }

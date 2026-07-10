@@ -40,54 +40,58 @@ export default function LandingPage() {
   return (
     <div>
       {/* Hero */}
-      <section className="relative bg-primary-600 text-white overflow-hidden">
-        <div className="absolute inset-0 opacity-15">
-          <div className="absolute top-0 left-0 w-[500px] h-[500px] bg-crimson-600 rounded-full blur-[120px] -translate-x-1/3 -translate-y-1/3"></div>
-          <div className="absolute bottom-0 right-0 w-[400px] h-[400px] bg-gold-400 rounded-full blur-[100px] translate-x-1/4 translate-y-1/4"></div>
-          <div className="absolute top-1/2 left-1/2 w-[300px] h-[300px] bg-primary-400 rounded-full blur-[80px] -translate-x-1/2 -translate-y-1/2"></div>
-        </div>
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-32">
-          <div className="max-w-2xl animate-fade-in">
-            <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-4 py-1.5 text-sm mb-6 hover:bg-white/15 transition">
-              <Sparkles className="w-4 h-4 text-gold-400" />
-              <span>{programs.length} programs · {countries.length} countries · {alumni.length} alumni</span>
+      <section className="blueprint-bg relative overflow-hidden" style={{ background: 'var(--card-alt)' }}>
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-12 sm:pt-20 sm:pb-16">
+          <div className="max-w-3xl animate-fade-in">
+            {/* Tag */}
+            <div className="inline-flex items-center gap-2 mb-6 border-2 px-3 py-1.5" style={{ borderColor: 'var(--border-color)', background: 'var(--card)', boxShadow: '2px 2px 0px 0px var(--border-color)' }}>
+              <span className="w-2 h-2" style={{ background: 'var(--crimson)' }}></span>
+              <span className="font-mono text-[10px] font-bold uppercase tracking-widest" style={{ color: 'var(--fg)' }}>
+                {programs.length} PROGRAMS · {countries.length} COUNTRIES · {alumni.length} ALUMNI
+              </span>
             </div>
-            <h1 className="font-display text-4xl md:text-6xl font-bold leading-tight mb-6">
-              Your perfect college? <br/>
-              <span className="text-gold-400">Let's find it together.</span>
+
+            {/* Headline */}
+            <h1 className="font-display text-4xl sm:text-5xl md:text-7xl leading-none tracking-wide mb-6" style={{ color: 'var(--fg)' }}>
+              YOUR PERFECT
+              <br />
+              <span style={{ color: 'var(--crimson)' }}>COLLEGE?</span>
+              <br />
+              <span className="font-serif italic normal-case tracking-normal text-3xl sm:text-4xl md:text-5xl" style={{ color: 'var(--muted-text)' }}>let's find it together.</span>
             </h1>
-            <p className="text-lg text-primary-200 leading-relaxed mb-8 max-w-xl">
-              Stop drowning in scattered brochures and confusing forum posts. AlumBridge brings you verified facts and real conversations with alumni from <strong className="text-white">IITs, MIT, Oxford, ETH Zurich</strong> and more — so you choose with confidence, not confusion.
+
+            <p className="font-serif text-base sm:text-lg leading-relaxed mb-8 max-w-xl" style={{ color: 'var(--muted-text)' }}>
+              Stop drowning in scattered brochures. AlumBridge brings you verified facts and real conversations with alumni from <strong style={{ color: 'var(--fg)' }}>IITs, MIT, Oxford, ETH Zurich</strong> and more.
             </p>
+
             <div className="flex flex-col sm:flex-row gap-3">
-              <Link
-                to="/programs"
-                className="inline-flex items-center justify-center gap-2 bg-gold-400 text-primary-800 font-bold px-7 py-3.5 rounded-xl hover:bg-gold-300 transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-[1.02]"
-              >
-                Browse Programs
-                <ArrowRight className="w-4 h-4" />
+              <Link to="/programs" className="btn-brutal btn-primary">
+                BROWSE PROGRAMS <ArrowRight className="w-4 h-4" />
               </Link>
-              <Link
-                to="/compare"
-                className="inline-flex items-center justify-center gap-2 bg-white/10 border border-white/30 text-white font-semibold px-7 py-3.5 rounded-xl hover:bg-white/20 transition-all duration-300 hover:scale-[1.02]"
-              >
-                Compare Side-by-Side
+              <Link to="/compare" className="btn-brutal btn-secondary">
+                COMPARE SIDE-BY-SIDE
               </Link>
             </div>
           </div>
+
+          {/* Reference codes */}
+          <div className="hidden lg:block absolute top-8 right-8 text-right">
+            <div className="ref-code">SYS_REF: AB_HERO_V2</div>
+            <div className="ref-code mt-1">EST. 2025</div>
+            <div className="ref-code mt-1">SCALE 1:1</div>
+          </div>
         </div>
-        <div className="absolute bottom-0 left-0 right-0 h-16 bg-cream" style={{clipPath: 'ellipse(60% 100% at 50% 100%)'}}></div>
       </section>
 
-      {/* University Flags Marquee */}
-      <section className="py-8 bg-cream">
+      {/* University Flags */}
+      <section className="py-8 border-y-2" style={{ background: 'var(--bg)', borderColor: 'var(--border-muted)' }}>
         <div className="max-w-7xl mx-auto px-4 text-center">
-          <p className="text-xs text-primary-400 font-medium uppercase tracking-widest mb-4">Programs from top universities worldwide</p>
+          <p className="font-mono text-[10px] font-bold uppercase tracking-widest mb-4" style={{ color: 'var(--subtle-text)' }}>PROGRAMS FROM TOP UNIVERSITIES WORLDWIDE</p>
           <div className="flex justify-center gap-6 flex-wrap">
             {programs.map(p => (
-              <Link key={p.id} to={`/programs/${p.id}`} className="group flex flex-col items-center gap-1 transition-all hover:scale-110 hover:-translate-y-1 duration-300">
+              <Link key={p.id} to={`/programs/${p.id}`} className="group flex flex-col items-center gap-1 transition-all hover:scale-110 hover:-translate-y-1 duration-200">
                 <span className="text-3xl drop-shadow-sm">{p.flag}</span>
-                <span className="text-[10px] text-primary-500 group-hover:text-crimson-600 font-medium transition-colors max-w-[80px] truncate">{p.university}</span>
+                <span className="font-mono text-[9px] font-bold uppercase tracking-wider transition-colors max-w-[80px] truncate" style={{ color: 'var(--muted-text)' }}>{p.university}</span>
               </Link>
             ))}
           </div>
@@ -95,38 +99,48 @@ export default function LandingPage() {
       </section>
 
       {/* Two Pillars */}
-      <section className="py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-14">
-            <h2 className="font-display text-3xl md:text-4xl font-bold text-primary-600 mb-3">Two pillars. One decision.</h2>
-            <p className="text-primary-400 max-w-lg mx-auto">We combine hard data with human insight — so you never have to choose blind.</p>
+      <section className="section-shell" style={{ background: 'var(--card)' }}>
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-12">
+            <div className="inline-flex items-center gap-2 mb-3">
+              <span className="w-2 h-2" style={{ background: 'var(--crimson)' }}></span>
+              <span className="font-mono text-[10px] font-bold uppercase tracking-widest" style={{ color: 'var(--crimson)' }}>TWO PILLARS</span>
+            </div>
+            <h2 className="font-display text-3xl md:text-4xl tracking-wide" style={{ color: 'var(--fg)' }}>ONE DECISION.</h2>
+            <p className="font-serif mt-2" style={{ color: 'var(--muted-text)' }}>We combine hard data with human insight — so you never choose blind.</p>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-            <div className="bg-parchment rounded-2xl p-8 border border-gold-200/50 hover:border-gold-300 transition-all duration-300 hover:shadow-lg hover:-translate-y-1 group">
-              <div className="w-14 h-14 bg-primary-600 rounded-2xl flex items-center justify-center mb-5 group-hover:bg-crimson-600 group-hover:scale-110 transition-all duration-300">
-                <BarChart3 className="w-7 h-7 text-gold-400" />
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+            <div className="brutal-card p-8 min-h-[250px] flex flex-col justify-between hover:-translate-y-1 transition-all duration-200" style={{ boxShadow: '4px 4px 0px 0px var(--border-color)' }}>
+              <div>
+                <div className="w-12 h-12 flex items-center justify-center border-2 mb-4" style={{ borderColor: 'var(--border-color)', background: 'var(--card)' }}>
+                  <BarChart3 className="w-6 h-6" style={{ color: 'var(--crimson)' }} />
+                </div>
+                <h3 className="font-display text-xl tracking-wide mb-2" style={{ color: 'var(--fg)' }}>PROGRAM INTELLIGENCE</h3>
+                <p className="font-serif text-sm leading-relaxed" style={{ color: 'var(--muted-text)' }}>
+                  Standardized profiles for every program — fees, eligibility, entrance tests, placement stats, and research opportunities.
+                </p>
               </div>
-              <h3 className="font-display text-xl font-bold text-primary-600 mb-3">Program Intelligence</h3>
-              <p className="text-primary-500 text-sm leading-relaxed">
-                Standardized profiles for every program — fees, eligibility, entrance tests, placement stats, and research opportunities. Compare apples to apples, not marketing fluff.
-              </p>
               <div className="mt-5 flex flex-wrap gap-2">
                 {["Fees", "Cutoffs", "Placements", "Research"].map(tag => (
-                  <span key={tag} className="text-[11px] bg-white text-primary-500 px-2.5 py-1 rounded-full font-medium border border-primary-100/50">{tag}</span>
+                  <span key={tag} className="font-mono text-[9px] font-bold uppercase tracking-wider px-2.5 py-1 border" style={{ borderColor: 'var(--border-muted)', color: 'var(--fg)' }}>{tag}</span>
                 ))}
               </div>
             </div>
-            <div className="bg-parchment rounded-2xl p-8 border border-crimson-200/50 hover:border-crimson-300 transition-all duration-300 hover:shadow-lg hover:-translate-y-1 group">
-              <div className="w-14 h-14 bg-crimson-600 rounded-2xl flex items-center justify-center mb-5 group-hover:bg-primary-600 group-hover:scale-110 transition-all duration-300">
-                <Users className="w-7 h-7 text-white" />
+
+            <div className="brutal-card p-8 min-h-[250px] flex flex-col justify-between hover:-translate-y-1 transition-all duration-200" style={{ boxShadow: '4px 4px 0px 0px var(--border-color)' }}>
+              <div>
+                <div className="w-12 h-12 flex items-center justify-center border-2 mb-4" style={{ borderColor: 'var(--border-color)', background: 'var(--card)' }}>
+                  <Users className="w-6 h-6" style={{ color: 'var(--orange)' }} />
+                </div>
+                <h3 className="font-display text-xl tracking-wide mb-2" style={{ color: 'var(--fg)' }}>ALUMNI GUIDANCE</h3>
+                <p className="font-serif text-sm leading-relaxed" style={{ color: 'var(--muted-text)' }}>
+                  Talk to verified graduates of that exact program. Ask questions, book calls, read honest reviews. Real humans, not anonymous Reddit threads.
+                </p>
               </div>
-              <h3 className="font-display text-xl font-bold text-primary-600 mb-3">Alumni Guidance</h3>
-              <p className="text-primary-500 text-sm leading-relaxed">
-                Talk to verified graduates of that exact program. Ask questions, book calls, read honest reviews. Real humans who've walked the path — not anonymous Reddit threads.
-              </p>
               <div className="mt-5 flex flex-wrap gap-2">
                 {["Q&A", "Book Calls", "Reviews", "AI Chat"].map(tag => (
-                  <span key={tag} className="text-[11px] bg-white text-primary-500 px-2.5 py-1 rounded-full font-medium border border-primary-100/50">{tag}</span>
+                  <span key={tag} className="font-mono text-[9px] font-bold uppercase tracking-wider px-2.5 py-1 border" style={{ borderColor: 'var(--border-muted)', color: 'var(--fg)' }}>{tag}</span>
                 ))}
               </div>
             </div>
@@ -134,24 +148,22 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* Stats Bar with animated counters */}
-      <section className="py-14 bg-gradient-to-r from-primary-600 via-primary-700 to-crimson-700 text-white">
+      {/* Stats Bar */}
+      <section className="py-14 border-y-2" style={{ background: 'var(--bg)', borderColor: 'var(--border-color)' }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
             {[
-              { label: 'Programs Listed', value: programs.length, suffix: '+', icon: BookOpen },
-              { label: 'Verified Alumni', value: alumni.length, suffix: '+', icon: Users },
-              { label: 'Countries', value: countries.length, suffix: '', icon: Globe },
-              { label: 'Avg. Placement', value: 94, suffix: '%', icon: BarChart3 },
-            ].map(({ label, value, suffix, icon: Icon }) => (
-              <div key={label} className="group">
-                <div className="inline-flex items-center justify-center w-12 h-12 bg-white/10 rounded-xl mb-3 group-hover:bg-gold-400/20 transition-colors duration-300">
-                  <Icon className="w-5 h-5 text-gold-400" />
-                </div>
-                <div className="font-display text-3xl md:text-4xl font-bold">
+              { label: 'Programs Listed', value: programs.length, suffix: '+', ref: 'DATA.PGM' },
+              { label: 'Verified Alumni', value: alumni.length, suffix: '+', ref: 'DATA.ALM' },
+              { label: 'Countries', value: countries.length, suffix: '', ref: 'DATA.CTY' },
+              { label: 'Avg. Placement', value: 94, suffix: '%', ref: 'DATA.PLC' },
+            ].map(({ label, value, suffix, ref }) => (
+              <div key={label} className="border-t-2 pt-4" style={{ borderColor: 'var(--border-muted)' }}>
+                <div className="font-display text-3xl md:text-4xl tracking-wide" style={{ color: 'var(--fg)' }}>
                   <AnimatedCounter end={value} suffix={suffix} />
                 </div>
-                <div className="text-sm text-primary-200 mt-1">{label}</div>
+                <div className="font-mono text-[9px] font-bold uppercase tracking-widest mt-1" style={{ color: 'var(--muted-text)' }}>{label}</div>
+                <div className="ref-code mt-1">{ref}</div>
               </div>
             ))}
           </div>
@@ -159,15 +171,18 @@ export default function LandingPage() {
       </section>
 
       {/* Featured Programs */}
-      <section className="py-20 bg-cream">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="section-shell" style={{ background: 'var(--bg)' }}>
+        <div className="max-w-7xl mx-auto">
           <div className="flex items-center justify-between mb-10">
             <div>
-              <h2 className="font-display text-2xl md:text-3xl font-bold text-primary-600">Featured Programs</h2>
-              <p className="text-primary-400 text-sm mt-1">Hand-picked programs with verified alumni across the globe</p>
+              <div className="inline-flex items-center gap-2 mb-2">
+                <span className="w-2 h-2" style={{ background: 'var(--crimson)' }}></span>
+                <span className="font-mono text-[10px] font-bold uppercase tracking-widest" style={{ color: 'var(--crimson)' }}>FEATURED</span>
+              </div>
+              <h2 className="font-display text-2xl md:text-3xl tracking-wide" style={{ color: 'var(--fg)' }}>PROGRAMS</h2>
             </div>
-            <Link to="/programs" className="hidden sm:inline-flex items-center gap-1 text-crimson-600 text-sm font-semibold hover:text-crimson-700 transition-colors group">
-              View all {programs.length} programs <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            <Link to="/programs" className="hidden sm:inline-flex btn-brutal text-[10px]" style={{ padding: '8px 16px', color: 'var(--fg)', background: 'var(--card)', border: '2px solid var(--border-color)', boxShadow: '2px 2px 0px 0px var(--border-color)' }}>
+              VIEW ALL {programs.length} <ChevronRight className="w-3 h-3" />
             </Link>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -175,17 +190,22 @@ export default function LandingPage() {
               <ProgramCard key={program.id} program={program} />
             ))}
           </div>
-          <Link to="/programs" className="sm:hidden mt-8 flex items-center justify-center gap-1 text-crimson-600 text-sm font-semibold">
-            View all {programs.length} programs <ChevronRight className="w-4 h-4" />
+          <Link to="/programs" className="sm:hidden mt-8 btn-brutal w-full text-center text-[10px]" style={{ padding: '10px 16px', color: 'var(--fg)', background: 'var(--card)', border: '2px solid var(--border-color)', boxShadow: '2px 2px 0px 0px var(--border-color)' }}>
+            VIEW ALL {programs.length} PROGRAMS <ChevronRight className="w-3 h-3" />
           </Link>
         </div>
       </section>
 
-      {/* Testimonials Carousel */}
-      <section className="py-16 bg-white">
-        <div className="max-w-3xl mx-auto px-4 text-center">
-          <h2 className="font-display text-2xl md:text-3xl font-bold text-primary-600 mb-8">What students are saying</h2>
-          <div className="relative min-h-[180px]">
+      {/* Testimonials */}
+      <section className="section-shell border-y-2" style={{ background: 'var(--card)', borderColor: 'var(--border-color)' }}>
+        <div className="max-w-3xl mx-auto text-center">
+          <div className="inline-flex items-center gap-2 mb-3">
+            <span className="w-2 h-2" style={{ background: 'var(--orange)' }}></span>
+            <span className="font-mono text-[10px] font-bold uppercase tracking-widest" style={{ color: 'var(--orange)' }}>VOICES</span>
+          </div>
+          <h2 className="font-display text-2xl md:text-3xl tracking-wide mb-8" style={{ color: 'var(--fg)' }}>WHAT STUDENTS SAY</h2>
+
+          <div className="relative min-h-[200px]">
             {TESTIMONIALS.map((t, i) => (
               <div
                 key={i}
@@ -193,15 +213,10 @@ export default function LandingPage() {
                   i === testimonialIdx ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4 pointer-events-none'
                 }`}
               >
-                <div className="bg-parchment rounded-2xl p-8 border border-gold-200/50 shadow-sm">
-                  <div className="flex justify-center mb-3">
-                    {Array.from({ length: 5 }).map((_, j) => (
-                      <Star key={j} className="w-4 h-4 text-gold-400 fill-gold-400" />
-                    ))}
-                  </div>
-                  <p className="text-primary-600 text-base leading-relaxed italic mb-4">"{t.text}"</p>
-                  <p className="text-sm font-semibold text-primary-700">{t.name}</p>
-                  <p className="text-xs text-primary-400">{t.role}</p>
+                <div className="brutal-card p-8" style={{ boxShadow: '4px 4px 0px 0px var(--border-color)' }}>
+                  <p className="font-serif text-lg md:text-xl leading-relaxed italic mb-4" style={{ color: 'var(--fg)' }}>"{t.text}"</p>
+                  <p className="font-mono text-xs font-bold" style={{ color: 'var(--fg)' }}>{t.name}</p>
+                  <p className="font-mono text-[10px] mt-0.5" style={{ color: 'var(--subtle-text)' }}>{t.role}</p>
                 </div>
               </div>
             ))}
@@ -211,146 +226,102 @@ export default function LandingPage() {
               <button
                 key={i}
                 onClick={() => setTestimonialIdx(i)}
-                className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${
-                  i === testimonialIdx ? 'bg-crimson-600 w-8' : 'bg-primary-200 hover:bg-primary-300'
-                }`}
+                className="h-2.5 transition-all duration-200 border"
+                style={{
+                  width: i === testimonialIdx ? '32px' : '10px',
+                  background: i === testimonialIdx ? 'var(--crimson)' : 'transparent',
+                  borderColor: 'var(--border-color)',
+                }}
               />
             ))}
           </div>
         </div>
       </section>
 
-      {/* AI Chatbot CTA */}
-      <section className="py-16 bg-cream">
-        <div className="max-w-4xl mx-auto px-4 text-center">
-          <div className="bg-gradient-to-br from-primary-600 via-primary-700 to-crimson-700 rounded-3xl p-10 text-white relative overflow-hidden">
-            <div className="absolute top-0 right-0 w-48 h-48 bg-crimson-600/20 rounded-full blur-3xl"></div>
-            <div className="absolute bottom-0 left-0 w-32 h-32 bg-gold-400/20 rounded-full blur-2xl"></div>
-            <div className="relative">
-              <div className="inline-flex items-center gap-2 bg-white/10 rounded-full px-3 py-1 text-xs mb-4">
-                <Sparkles className="w-3 h-3 text-gold-400" />
-                <span>AI-Powered Assistant</span>
-              </div>
-              <h2 className="font-display text-2xl md:text-3xl font-bold mb-3">Got questions? Ask our AI.</h2>
-              <p className="text-primary-200 max-w-md mx-auto mb-6 text-sm">
-                Our chatbot is trained on alumni reviews, placement data, and program facts from 6 countries. It answers honestly — no marketing spin, no ads.
-              </p>
-              <p className="text-gold-400 text-sm font-medium animate-pulse">Click the chat button in the bottom-right corner →</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Quick Comparison Teaser — Side-by-side Table */}
-      <section className="py-16 bg-white">
-        <div className="max-w-5xl mx-auto px-4">
+      {/* Compare Table */}
+      <section className="section-shell" style={{ background: 'var(--bg)' }}>
+        <div className="max-w-5xl mx-auto">
           <div className="text-center mb-10">
-            <h2 className="font-display text-2xl md:text-3xl font-bold text-primary-600 mb-2">At a glance: How do they compare?</h2>
-            <p className="text-primary-400 text-sm">A sneak peek — use our full compare tool for detailed analysis</p>
+            <div className="inline-flex items-center gap-2 mb-2">
+              <span className="w-2 h-2" style={{ background: 'var(--crimson)' }}></span>
+              <span className="font-mono text-[10px] font-bold uppercase tracking-widest" style={{ color: 'var(--crimson)' }}>AT A GLANCE</span>
+            </div>
+            <h2 className="font-display text-2xl md:text-3xl tracking-wide" style={{ color: 'var(--fg)' }}>HOW DO THEY COMPARE?</h2>
           </div>
-          <div className="overflow-x-auto rounded-2xl border border-primary-100/50 shadow-sm">
-            <table className="w-full min-w-[600px] text-sm">
+          <div className="overflow-x-auto border-2" style={{ borderColor: 'var(--border-color)', boxShadow: '4px 4px 0px 0px var(--border-color)' }}>
+            <table className="w-full min-w-[600px] text-sm" style={{ fontFamily: 'JetBrains Mono, monospace' }}>
               <thead>
-                <tr className="bg-primary-600 text-white">
-                  <th className="text-left py-4 px-5 font-display text-sm font-semibold sticky left-0 bg-primary-600 z-10">Metric</th>
-                  <th className="py-4 px-5 text-center">
-                    <div className="flex flex-col items-center gap-1">
-                      <span className="text-xl">🇮🇳</span>
-                      <span className="font-display font-bold text-xs">IIT Delhi CSE</span>
-                    </div>
-                  </th>
-                  <th className="py-4 px-5 text-center">
-                    <div className="flex flex-col items-center gap-1">
-                      <span className="text-xl">🇺🇸</span>
-                      <span className="font-display font-bold text-xs">MIT EECS</span>
-                    </div>
-                  </th>
-                  <th className="py-4 px-5 text-center">
-                    <div className="flex flex-col items-center gap-1">
-                      <span className="text-xl">🇨🇭</span>
-                      <span className="font-display font-bold text-xs">ETH Zurich CS</span>
-                    </div>
-                  </th>
+                <tr style={{ background: 'var(--card)', borderBottom: '2px solid var(--border-color)' }}>
+                  <th className="text-left py-4 px-5 font-display text-xs tracking-wide" style={{ color: 'var(--fg)' }}>METRIC</th>
+                  {[
+                    { flag: '🇮🇳', name: 'IIT DELHI CSE' },
+                    { flag: '🇺🇸', name: 'MIT EECS' },
+                    { flag: '🇨🇭', name: 'ETH ZURICH CS' },
+                  ].map(u => (
+                    <th key={u.name} className="py-4 px-5 text-center">
+                      <div className="flex flex-col items-center gap-1">
+                        <span className="text-xl">{u.flag}</span>
+                        <span className="font-display text-[11px] tracking-wide" style={{ color: 'var(--fg)' }}>{u.name}</span>
+                      </div>
+                    </th>
+                  ))}
                 </tr>
               </thead>
               <tbody>
-                <tr className="border-b border-primary-50 bg-parchment">
-                  <td className="py-4 px-5 font-semibold text-primary-600 sticky left-0 bg-parchment z-10">💰 Tuition Fees</td>
-                  <td className="py-4 px-5 text-center">
-                    <span className="font-bold text-primary-700">~$10.8K</span>
-                    <p className="text-[10px] text-primary-400 mt-0.5">₹9,00,000 total</p>
-                  </td>
-                  <td className="py-4 px-5 text-center">
-                    <span className="font-bold text-primary-700">~$232K</span>
-                    <p className="text-[10px] text-primary-400 mt-0.5">$57,986/year</p>
-                  </td>
-                  <td className="py-4 px-5 text-center">
-                    <span className="font-bold text-primary-700">~$2.5K</span>
-                    <p className="text-[10px] text-primary-400 mt-0.5">CHF 2,190 total</p>
-                  </td>
-                </tr>
-                <tr className="border-b border-primary-50">
-                  <td className="py-4 px-5 font-semibold text-primary-600 sticky left-0 bg-white z-10">📈 Avg. Package</td>
-                  <td className="py-4 px-5 text-center">
-                    <span className="font-bold text-crimson-600">22 LPA</span>
-                    <p className="text-[10px] text-primary-400 mt-0.5">~$26.4K USD</p>
-                  </td>
-                  <td className="py-4 px-5 text-center">
-                    <span className="font-bold text-crimson-600">$150K</span>
-                    <p className="text-[10px] text-primary-400 mt-0.5">Top tier globally</p>
-                  </td>
-                  <td className="py-4 px-5 text-center">
-                    <span className="font-bold text-crimson-600">CHF 105K</span>
-                    <p className="text-[10px] text-primary-400 mt-0.5">~$120K USD</p>
-                  </td>
-                </tr>
-                <tr>
-                  <td className="py-4 px-5 font-semibold text-primary-600 sticky left-0 bg-parchment z-10">🎯 Acceptance Rate</td>
-                  <td className="py-4 px-5 text-center">
-                    <span className="font-bold text-primary-700">&lt;2%</span>
-                    <p className="text-[10px] text-primary-400 mt-0.5">via JEE Advanced</p>
-                  </td>
-                  <td className="py-4 px-5 text-center">
-                    <span className="font-bold text-primary-700">~4%</span>
-                    <p className="text-[10px] text-primary-400 mt-0.5">Holistic review</p>
-                  </td>
-                  <td className="py-4 px-5 text-center">
-                    <span className="font-bold text-primary-700">~27%</span>
-                    <p className="text-[10px] text-primary-400 mt-0.5">Academic focus</p>
-                  </td>
-                </tr>
+                {[
+                  { metric: '💰 TUITION FEES', vals: [['~$10.8K', '₹9,00,000 total'], ['~$232K', '$57,986/year'], ['~$2.5K', 'CHF 2,190 total']] },
+                  { metric: '📈 AVG. PACKAGE', vals: [['22 LPA', '~$26.4K USD'], ['$150K', 'Top tier globally'], ['CHF 105K', '~$120K USD']] },
+                  { metric: '🎯 ACCEPTANCE RATE', vals: [['<2%', 'via JEE Advanced'], ['~4%', 'Holistic review'], ['~27%', 'Academic focus']] },
+                ].map((row, ri) => (
+                  <tr key={row.metric} style={{ background: ri % 2 === 0 ? 'var(--card-alt)' : 'var(--card)', borderBottom: ri < 2 ? '1px solid var(--border-muted)' : 'none' }}>
+                    <td className="py-4 px-5 font-bold text-[10px] uppercase tracking-wider" style={{ color: 'var(--fg)' }}>{row.metric}</td>
+                    {row.vals.map(([val, sub], ci) => (
+                      <td key={ci} className="py-4 px-5 text-center">
+                        <span className="font-bold text-sm" style={{ color: 'var(--fg)' }}>{val}</span>
+                        <p className="text-[9px] mt-0.5" style={{ color: 'var(--subtle-text)' }}>{sub}</p>
+                      </td>
+                    ))}
+                  </tr>
+                ))}
               </tbody>
             </table>
           </div>
           <div className="text-center mt-8">
-            <Link to="/compare" className="inline-flex items-center gap-2 bg-primary-600 text-white font-semibold px-6 py-3 rounded-xl hover:bg-crimson-600 transition-all duration-300 shadow-sm hover:shadow-md">
-              Compare All Programs
-              <ArrowRight className="w-4 h-4" />
+            <Link to="/compare" className="btn-brutal btn-primary">
+              COMPARE ALL PROGRAMS <ArrowRight className="w-4 h-4" />
             </Link>
           </div>
         </div>
       </section>
 
+      {/* AI Chatbot CTA */}
+      <section className="section-shell border-y-2" style={{ background: 'var(--card)', borderColor: 'var(--border-color)' }}>
+        <div className="max-w-4xl mx-auto text-center">
+          <div className="inline-flex items-center gap-2 mb-3">
+            <Sparkles className="w-3.5 h-3.5" style={{ color: 'var(--orange)' }} />
+            <span className="font-mono text-[10px] font-bold uppercase tracking-widest" style={{ color: 'var(--orange)' }}>AI-POWERED ASSISTANT</span>
+          </div>
+          <h2 className="font-display text-2xl md:text-3xl tracking-wide mb-3" style={{ color: 'var(--fg)' }}>GOT QUESTIONS? ASK OUR AI.</h2>
+          <p className="font-serif max-w-md mx-auto mb-6 text-sm" style={{ color: 'var(--muted-text)' }}>
+            Our chatbot is trained on alumni reviews, placement data, and program facts from 6 countries. No marketing spin, no ads.
+          </p>
+          <p className="font-mono text-xs font-bold animate-pulse" style={{ color: 'var(--orange)' }}>CLICK THE CHAT BUTTON IN THE BOTTOM-RIGHT CORNER →</p>
+        </div>
+      </section>
+
       {/* Final CTA */}
-      <section className="py-20 bg-gradient-to-b from-cream to-parchment">
-        <div className="max-w-3xl mx-auto px-4 text-center">
-          <h2 className="font-display text-3xl md:text-4xl font-bold text-primary-600 mb-4">Ready to find your program?</h2>
-          <p className="text-primary-400 mb-8 max-w-lg mx-auto">
-            Browse programs from {countries.length} countries, compare them side by side, chat with our AI, and talk to real alumni who've been there.
+      <section className="blueprint-bg section-shell" style={{ background: 'var(--bg)' }}>
+        <div className="relative max-w-3xl mx-auto text-center">
+          <h2 className="font-display text-3xl md:text-4xl tracking-wide mb-4" style={{ color: 'var(--fg)' }}>READY TO FIND YOUR PROGRAM?</h2>
+          <p className="font-serif mb-8 max-w-lg mx-auto" style={{ color: 'var(--muted-text)' }}>
+            Browse programs from {countries.length} countries, compare them side by side, chat with our AI, and talk to real alumni.
           </p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
-            <Link
-              to="/programs"
-              className="inline-flex items-center gap-2 bg-crimson-600 text-white font-bold px-8 py-4 rounded-xl hover:bg-crimson-700 transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-[1.02]"
-            >
-              Start Exploring
-              <ArrowRight className="w-5 h-5" />
+            <Link to="/programs" className="btn-brutal btn-primary">
+              START EXPLORING <ArrowRight className="w-5 h-5" />
             </Link>
-            <Link
-              to="/compare"
-              className="inline-flex items-center gap-2 bg-white text-primary-600 font-bold px-8 py-4 rounded-xl border border-primary-200 hover:border-crimson-300 hover:text-crimson-600 transition-all duration-300 shadow-sm hover:shadow-md"
-            >
-              Compare Programs
+            <Link to="/compare" className="btn-brutal btn-secondary">
+              COMPARE PROGRAMS
             </Link>
           </div>
         </div>
