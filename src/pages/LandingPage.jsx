@@ -84,7 +84,7 @@ export default function LandingPage() {
               <br />
               <span style={{ color: 'var(--crimson)' }}>COLLEGE?</span>
               <br />
-              <span className="font-serif italic normal-case tracking-normal text-3xl sm:text-4xl md:text-5xl" style={{ color: 'var(--muted-text)' }}>let's find it together.</span>
+              <span className="font-display text-3xl sm:text-4xl md:text-5xl tracking-wide" style={{ color: 'var(--crimson)' }}>CONNECT&nbsp;&nbsp;GUIDE&nbsp;&nbsp;GROW</span>
             </h1>
 
             <p className="font-serif text-base sm:text-lg leading-relaxed mb-8 max-w-xl" style={{ color: 'var(--muted-text)' }}>
