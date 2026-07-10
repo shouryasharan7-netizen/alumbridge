@@ -83,16 +83,25 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* University Flags */}
-      <section className="py-8 border-y-2" style={{ background: 'var(--bg)', borderColor: 'var(--border-muted)' }}>
-        <div className="max-w-7xl mx-auto px-4 text-center">
-          <p className="font-mono text-[10px] font-bold uppercase tracking-widest mb-4" style={{ color: 'var(--subtle-text)' }}>PROGRAMS FROM TOP UNIVERSITIES WORLDWIDE</p>
-          <div className="flex justify-center gap-6 flex-wrap">
-            {programs.map(p => (
-              <Link key={p.id} to={`/programs/${p.id}`} className="group flex flex-col items-center gap-1 transition-all hover:scale-110 hover:-translate-y-1 duration-200">
-                <span className="text-3xl drop-shadow-sm">{p.flag}</span>
-                <span className="font-mono text-[9px] font-bold uppercase tracking-wider transition-colors max-w-[80px] truncate" style={{ color: 'var(--muted-text)' }}>{p.university}</span>
-              </Link>
+      {/* Program Scroll Strip */}
+      <section className="py-6 border-y-2 overflow-hidden" style={{ background: 'var(--bg)', borderColor: 'var(--border-muted)' }}>
+        <div className="max-w-7xl mx-auto px-4 mb-3">
+          <p className="font-mono text-[10px] font-bold uppercase tracking-widest text-center" style={{ color: 'var(--subtle-text)' }}>PROGRAMS FROM TOP UNIVERSITIES WORLDWIDE</p>
+        </div>
+        <div className="relative">
+          <div className="marquee-track" style={{ animationDuration: '120s' }}>
+            {[...Array(2)].map((_, rep) => (
+              <div key={rep} className="flex items-center gap-3 px-3">
+                {programs.slice(0, 60).map((p) => (
+                  <Link key={`${p.id}-${rep}`} to={`/programs/${p.id}`}
+                    className="flex-shrink-0 border-2 px-4 py-2.5 transition-all duration-150 hover:-translate-y-0.5 hover:border-current group"
+                    style={{ borderColor: 'var(--border-muted)', background: 'var(--card)', minWidth: '220px' }}
+                  >
+                    <p className="font-display text-[11px] tracking-wide leading-tight group-hover:underline" style={{ color: 'var(--fg)' }}>{p.name}</p>
+                    <p className="font-mono text-[9px] uppercase tracking-wider mt-0.5" style={{ color: 'var(--muted-text)' }}>{p.university} · {p.degree}</p>
+                  </Link>
+                ))}
+              </div>
             ))}
           </div>
         </div>
