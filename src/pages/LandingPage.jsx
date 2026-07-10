@@ -68,8 +68,8 @@ export default function LandingPage() {
               <Link to="/programs" className="btn-brutal btn-primary">
                 BROWSE PROGRAMS <ArrowRight className="w-4 h-4" />
               </Link>
-              <Link to="/compare" className="btn-brutal btn-secondary">
-                COMPARE SIDE-BY-SIDE
+              <Link to="/programs" className="btn-brutal btn-secondary">
+                BROWSE & COMPARE
               </Link>
             </div>
           </div>
@@ -287,8 +287,8 @@ export default function LandingPage() {
             </table>
           </div>
           <div className="text-center mt-8">
-            <Link to="/compare" className="btn-brutal btn-primary">
-              COMPARE ALL PROGRAMS <ArrowRight className="w-4 h-4" />
+            <Link to="/programs" className="btn-brutal btn-primary">
+              BROWSE & COMPARE ALL <ArrowRight className="w-4 h-4" />
             </Link>
           </div>
         </div>
@@ -320,8 +320,8 @@ export default function LandingPage() {
             <Link to="/programs" className="btn-brutal btn-primary">
               START EXPLORING <ArrowRight className="w-5 h-5" />
             </Link>
-            <Link to="/compare" className="btn-brutal btn-secondary">
-              COMPARE PROGRAMS
+            <Link to="/projects" className="btn-brutal btn-secondary">
+              STUDENT PROJECTS
             </Link>
           </div>
         </div>

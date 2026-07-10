@@ -3,29 +3,27 @@ import { ThemeProvider } from './context/ThemeContext'
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
 import ChatBot from './components/ChatBot'
-import CustomCursor from './components/CustomCursor'
 import LandingPage from './pages/LandingPage'
-import ProgramCatalog from './pages/ProgramCatalog'
+import Programs from './pages/Programs'
 import ProgramProfile from './pages/ProgramProfile'
-import ComparePrograms from './pages/ComparePrograms'
 import AlumniConnect from './pages/AlumniConnect'
 import AlumniListing from './pages/AlumniListing'
+import Projects from './pages/Projects'
 import Sitemap from './pages/Sitemap'
 
 function App() {
   return (
     <ThemeProvider>
-      <CustomCursor />
       <div className="min-h-screen flex flex-col" style={{ background: 'var(--bg)' }}>
         <Navbar />
         <main className="flex-1">
           <Routes>
             <Route path="/" element={<LandingPage />} />
-            <Route path="/programs" element={<ProgramCatalog />} />
+            <Route path="/programs" element={<Programs />} />
             <Route path="/programs/:id" element={<ProgramProfile />} />
-            <Route path="/compare" element={<ComparePrograms />} />
             <Route path="/alumni" element={<AlumniListing />} />
             <Route path="/alumni/:id" element={<AlumniConnect />} />
+            <Route path="/projects" element={<Projects />} />
             <Route path="/sitemap" element={<Sitemap />} />
           </Routes>
         </main>

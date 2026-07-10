@@ -1,7 +1,8 @@
 import { Link } from 'react-router-dom'
-import { Home, BookOpen, BarChart3, Users, MessageCircle, ArrowRight, Globe, MapPin, ChevronRight, Sparkles } from 'lucide-react'
+import { Home, BookOpen, BarChart3, Users, MessageCircle, ArrowRight, Globe, MapPin, ChevronRight, Sparkles, Rocket } from 'lucide-react'
 import { programs } from '../data/programs'
 import { alumni } from '../data/alumni'
+import { projects } from '../data/projects'
 
 export default function Sitemap() {
   const countries = [...new Set(programs.map(p => p.country))].sort()
@@ -36,9 +37,9 @@ export default function Sitemap() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
           {[
             { to: '/', icon: Home, label: 'Home', desc: 'Landing page' },
-            { to: '/programs', icon: BookOpen, label: 'Browse Programs', desc: `${programs.length} programs` },
-            { to: '/compare', icon: BarChart3, label: 'Compare', desc: 'Side-by-side' },
+            { to: '/programs', icon: BookOpen, label: 'Programs', desc: `${programs.length} programs + compare` },
             { to: '/alumni', icon: Users, label: 'Alumni', desc: `${alumni.length} verified` },
+            { to: '/projects', icon: Rocket, label: 'Projects', desc: `${projects.length} student projects` },
           ].map(link => (
             <Link key={link.to} to={link.to} className="brutal-card p-4 flex items-center gap-3 transition-all hover:-translate-y-0.5" style={{ boxShadow: '3px 3px 0px 0px var(--border-color)' }}>
               <div className="w-10 h-10 flex items-center justify-center border-2 flex-shrink-0" style={{ borderColor: 'var(--border-color)', background: 'var(--card)' }}>

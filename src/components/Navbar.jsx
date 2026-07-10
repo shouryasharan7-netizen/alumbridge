@@ -11,8 +11,8 @@ export default function Navbar() {
   const links = [
     { to: '/', label: 'Home' },
     { to: '/programs', label: 'Programs' },
-    { to: '/compare', label: 'Compare' },
     { to: '/alumni', label: 'Alumni' },
+    { to: '/projects', label: 'Projects' },
   ]
 
   const isActive = (path) => path === '/' ? location.pathname === '/' : location.pathname.startsWith(path)
@@ -64,13 +64,12 @@ export default function Navbar() {
               className="btn-brutal btn-primary text-[11px]"
               style={{ padding: '8px 20px' }}
             >
-              EXPLORE ALL
+              BROWSE PROGRAMS
             </Link>
           </div>
 
           {/* Right controls */}
           <div className="flex items-center gap-2">
-            {/* Theme toggle */}
             <button
               onClick={toggle}
               className="w-9 h-9 sm:w-10 sm:h-10 flex items-center justify-center transition-all duration-150 hover:-translate-y-0.5"
@@ -88,7 +87,6 @@ export default function Navbar() {
               )}
             </button>
 
-            {/* Mobile menu toggle */}
             <button
               className="md:hidden w-9 h-9 sm:w-10 sm:h-10 flex items-center justify-center transition-all duration-150"
               style={{
@@ -120,18 +118,10 @@ export default function Navbar() {
                 {link.label}
               </Link>
             ))}
-            <Link
-              to="/programs"
-              onClick={() => setMobileOpen(false)}
-              className="btn-brutal btn-primary w-full mt-3 text-center text-[11px]"
-            >
-              EXPLORE ALL PROGRAMS
-            </Link>
           </div>
         )}
       </nav>
 
-      {/* Spacer for fixed nav */}
       <div className="h-20 sm:h-24" />
     </>
   )

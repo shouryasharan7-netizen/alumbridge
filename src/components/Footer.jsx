@@ -52,8 +52,8 @@ export default function Footer() {
             <ul className="space-y-2.5 text-sm" style={{ fontFamily: 'system-ui, sans-serif' }}>
               <li><Link to="/" className="hover:underline" style={{ color: 'var(--fg)' }}>Home</Link></li>
               <li><Link to="/programs" className="hover:underline" style={{ color: 'var(--fg)' }}>Browse Programs</Link></li>
-              <li><Link to="/compare" className="hover:underline" style={{ color: 'var(--fg)' }}>Compare Programs</Link></li>
               <li><Link to="/alumni" className="hover:underline" style={{ color: 'var(--fg)' }}>Alumni Network</Link></li>
+              <li><Link to="/projects" className="hover:underline" style={{ color: 'var(--fg)' }}>Student Projects</Link></li>
               <li><Link to="/sitemap" className="hover:underline" style={{ color: 'var(--fg)' }}>Site Map</Link></li>
             </ul>
           </div>
