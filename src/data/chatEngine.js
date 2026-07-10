@@ -9,8 +9,8 @@ const byCountry = {}
 const byUniversity = {}
 const byBranch = {}
 programs.forEach(p => {
-  (byCountry[p.country] = byCountry[p.country] || []).push(p)
-  (byUniversity[p.university] = byUniversity[p.university] || []).push(p)
+  ;(byCountry[p.country] = byCountry[p.country] || []).push(p)
+  ;(byUniversity[p.university] = byUniversity[p.university] || []).push(p)
   const key = p.name.toLowerCase()
   ;(byBranch[key] = byBranch[key] || []).push(p)
 })
