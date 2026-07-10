@@ -76,8 +76,8 @@ export default function AlumniListing() {
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-6">
         {/* Location / Country */}
         <div className="relative">
-          <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5" style={{ color: 'var(--subtle-text)' }} />
-          <select value={countryFilter} onChange={(e) => { setCountryFilter(e.target.value); setVisibleCount(PAGE_SIZE) }} className="brutal-input w-full pl-9 cursor-pointer">
+          <MapPin className="absolute left-3.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 pointer-events-none" style={{ color: 'var(--subtle-text)' }} />
+          <select value={countryFilter} onChange={(e) => { setCountryFilter(e.target.value); setVisibleCount(PAGE_SIZE) }} className="brutal-input select-icon w-full">
             <option value="all">All Locations</option>
             {countries.map(c => {
               const count = alumni.filter(a => programMap.get(a.programId)?.country === c).length
@@ -88,16 +88,16 @@ export default function AlumniListing() {
         </div>
         {/* Course / Subject */}
         <div className="relative">
-          <GraduationCap className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5" style={{ color: 'var(--subtle-text)' }} />
-          <select value={courseFilter} onChange={(e) => { setCourseFilter(e.target.value); setVisibleCount(PAGE_SIZE) }} className="brutal-input w-full pl-9 cursor-pointer">
+          <GraduationCap className="absolute left-3.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 pointer-events-none" style={{ color: 'var(--subtle-text)' }} />
+          <select value={courseFilter} onChange={(e) => { setCourseFilter(e.target.value); setVisibleCount(PAGE_SIZE) }} className="brutal-input select-icon w-full">
             <option value="">All Courses / Subjects</option>
             {courses.map(c => <option key={c} value={c}>{c}</option>)}
           </select>
         </div>
         {/* Company */}
         <div className="relative">
-          <Building className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5" style={{ color: 'var(--subtle-text)' }} />
-          <select value={companyFilter} onChange={(e) => { setCompanyFilter(e.target.value); setVisibleCount(PAGE_SIZE) }} className="brutal-input w-full pl-9 cursor-pointer">
+          <Building className="absolute left-3.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 pointer-events-none" style={{ color: 'var(--subtle-text)' }} />
+          <select value={companyFilter} onChange={(e) => { setCompanyFilter(e.target.value); setVisibleCount(PAGE_SIZE) }} className="brutal-input select-icon w-full">
             <option value="">All Companies</option>
             {companies.map(c => <option key={c} value={c}>{c}</option>)}
           </select>

@@ -153,8 +153,8 @@ export default function Programs() {
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-4">
         {/* Country */}
         <div className="relative">
-          <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5" style={{ color: 'var(--subtle-text)' }} />
-          <select value={countryFilter} onChange={(e) => handleCountry(e.target.value)} className="brutal-input w-full pl-9 cursor-pointer">
+          <MapPin className="absolute left-3.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 pointer-events-none" style={{ color: 'var(--subtle-text)' }} />
+          <select value={countryFilter} onChange={(e) => handleCountry(e.target.value)} className="brutal-input select-icon w-full">
             <option value="all">All Countries ({programs.length})</option>
             {countries.map(c => {
               const count = programs.filter(p => p.country === c).length
@@ -165,16 +165,16 @@ export default function Programs() {
         </div>
         {/* Degree */}
         <div className="relative">
-          <GraduationCap className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5" style={{ color: 'var(--subtle-text)' }} />
-          <select value={degreeFilter} onChange={(e) => handleDegree(e.target.value)} className="brutal-input w-full pl-9 cursor-pointer">
+          <GraduationCap className="absolute left-3.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 pointer-events-none" style={{ color: 'var(--subtle-text)' }} />
+          <select value={degreeFilter} onChange={(e) => handleDegree(e.target.value)} className="brutal-input select-icon w-full">
             <option value="all">All Degrees</option>
             {degrees.map(d => <option key={d} value={d}>{d} ({programs.filter(p => p.degree === d).length})</option>)}
           </select>
         </div>
         {/* Subject/Course */}
         <div className="relative">
-          <Building className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5" style={{ color: 'var(--subtle-text)' }} />
-          <select value={subjectFilter} onChange={(e) => handleSubject(e.target.value)} className="brutal-input w-full pl-9 cursor-pointer">
+          <Building className="absolute left-3.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 pointer-events-none" style={{ color: 'var(--subtle-text)' }} />
+          <select value={subjectFilter} onChange={(e) => handleSubject(e.target.value)} className="brutal-input select-icon w-full">
             <option value="">All Courses / Subjects</option>
             {subjects.map(s => <option key={s} value={s}>{s}</option>)}
           </select>

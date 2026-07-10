@@ -80,44 +80,26 @@ export default function Projects() {
       {/* Filters */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-4">
         <div className="relative">
-          <GraduationCap className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5" style={{ color: 'var(--subtle-text)' }} />
-          <select value={courseFilter} onChange={(e) => { setCourseFilter(e.target.value); setVisibleCount(PAGE_SIZE) }} className="brutal-input w-full pl-9 cursor-pointer">
+          <GraduationCap className="absolute left-3.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 pointer-events-none" style={{ color: 'var(--subtle-text)' }} />
+          <select value={courseFilter} onChange={(e) => { setCourseFilter(e.target.value); setVisibleCount(PAGE_SIZE) }} className="brutal-input select-icon w-full">
             <option value="">All Courses</option>
             {courses.map(c => <option key={c} value={c}>{c}</option>)}
           </select>
         </div>
         <div className="relative">
-          <Tag className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5" style={{ color: 'var(--subtle-text)' }} />
-          <select value={tagFilter} onChange={(e) => { setTagFilter(e.target.value); setVisibleCount(PAGE_SIZE) }} className="brutal-input w-full pl-9 cursor-pointer">
+          <Tag className="absolute left-3.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 pointer-events-none" style={{ color: 'var(--subtle-text)' }} />
+          <select value={tagFilter} onChange={(e) => { setTagFilter(e.target.value); setVisibleCount(PAGE_SIZE) }} className="brutal-input select-icon w-full">
             <option value="">All Technologies</option>
             {allTags.map(t => <option key={t} value={t}>{t}</option>)}
           </select>
         </div>
         <div className="relative">
-          <Filter className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5" style={{ color: 'var(--subtle-text)' }} />
-          <select value={statusFilter} onChange={(e) => { setStatusFilter(e.target.value); setVisibleCount(PAGE_SIZE) }} className="brutal-input w-full pl-9 cursor-pointer">
+          <Filter className="absolute left-3.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 pointer-events-none" style={{ color: 'var(--subtle-text)' }} />
+          <select value={statusFilter} onChange={(e) => { setStatusFilter(e.target.value); setVisibleCount(PAGE_SIZE) }} className="brutal-input select-icon w-full">
             <option value="all">All Statuses</option>
             {statuses.map(s => <option key={s} value={s}>{s}</option>)}
           </select>
         </div>
-      </div>
-
-      {/* Tag pills */}
-      <div className="flex flex-wrap gap-2 mb-6">
-        {['Machine Learning','Web Dev','IoT','Blockchain','Cybersecurity','Robotics','AR/VR','NLP','Data Science'].map(tag => {
-          const active = tagFilter === tag
-          return (
-            <button key={tag} onClick={() => { setTagFilter(active ? '' : tag); setVisibleCount(PAGE_SIZE) }}
-              className="font-mono text-[10px] font-bold uppercase tracking-wider px-3 py-2 border-2 transition-all duration-150 hover:-translate-y-0.5"
-              style={{
-                background: active ? 'var(--crimson)' : 'transparent',
-                color: active ? '#fff' : 'var(--fg)',
-                borderColor: 'var(--border-color)',
-                boxShadow: active ? '2px 2px 0px 0px var(--border-color)' : 'none',
-              }}
-            >{tag}</button>
-          )
-        })}
       </div>
 
       {/* Results bar */}
