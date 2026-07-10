@@ -26,6 +26,33 @@ const TESTIMONIALS = [
   { text: "The ETH Zurich page blew my mind — $730/year tuition for a world-class CS program? I had no idea!", name: "Rohan M.", role: "Class 11 Student, Bangalore" },
 ]
 
+function programIcon(name, degree) {
+  const n = name.toLowerCase()
+  if (n.includes('computer') || n.includes('software') || n.includes('data science') || n.includes('ai') || n.includes('artificial')) return '💻'
+  if (n.includes('mechanical') || n.includes('automobile') || n.includes('aerospace') || n.includes('aero')) return '🔧'
+  if (n.includes('electrical') || n.includes('electronics') || n.includes('vlsi') || n.includes('circuit')) return '⚡'
+  if (n.includes('civil') || n.includes('architecture') || n.includes('construction') || n.includes('planning')) return '🏗️'
+  if (n.includes('chemical') || n.includes('chemistry') || n.includes('material')) return '🧪'
+  if (n.includes('bio') || n.includes('medical') || n.includes('pharma') || n.includes('genetic')) return '🧬'
+  if (n.includes('math') || n.includes('statistic') || n.includes('physics')) return '📐'
+  if (n.includes('business') || n.includes('management') || n.includes('mba') || n.includes('finance') || n.includes('commerce') || n.includes('economics')) return '📊'
+  if (n.includes('design') || n.includes('art') || n.includes('visual') || n.includes('media')) return '🎨'
+  if (n.includes('law') || n.includes('legal')) return '⚖️'
+  if (n.includes('environment') || n.includes('sustainability') || n.includes('climate')) return '🌱'
+  if (n.includes('cyber') || n.includes('security') || n.includes('information security')) return '🔒'
+  if (n.includes('robotics') || n.includes('automation') || n.includes('mechatronics')) return '🤖'
+  if (n.includes('communication') || n.includes('signal') || n.includes('network') || n.includes('telecom')) return '📡'
+  if (n.includes('psychology') || n.includes('cognitive')) return '🧠'
+  if (n.includes('english') || n.includes('literature') || n.includes('philosophy') || n.includes('history') || n.includes('linguistics')) return '📚'
+  if (n.includes('metallurgical') || n.includes('mining') || n.includes('geology') || n.includes('earth')) return '⛏️'
+  if (n.includes('textile') || n.includes('fashion')) return '🧵'
+  if (n.includes('food') || n.includes('nutrition')) return '🍽️'
+  if (n.includes('nuclear') || n.includes('energy')) return '☢️'
+  if (n.includes('agriculture') || n.includes('forestry')) return '🌾'
+  if (degree && degree.toLowerCase().includes('b.arch')) return '📏'
+  return '🎓'
+}
+
 export default function LandingPage() {
   const [testimonialIdx, setTestimonialIdx] = useState(0)
   const countries = [...new Set(programs.map(p => p.country))]
@@ -86,19 +113,22 @@ export default function LandingPage() {
       {/* Program Scroll Strip */}
       <section className="py-6 border-y-2 overflow-hidden" style={{ background: 'var(--bg)', borderColor: 'var(--border-muted)' }}>
         <div className="max-w-7xl mx-auto px-4 mb-3">
-          <p className="font-mono text-[10px] font-bold uppercase tracking-widest text-center" style={{ color: 'var(--subtle-text)' }}>PROGRAMS FROM TOP UNIVERSITIES WORLDWIDE</p>
+          <p className="font-mono text-[10px] font-bold uppercase tracking-widest text-center" style={{ color: 'var(--subtle-text)' }}>EXPLORE PROGRAMS ACROSS TOP UNIVERSITIES</p>
         </div>
         <div className="relative">
-          <div className="marquee-track" style={{ animationDuration: '120s' }}>
+          <div className="marquee-track" style={{ animationDuration: '140s' }}>
             {[...Array(2)].map((_, rep) => (
               <div key={rep} className="flex items-center gap-3 px-3">
-                {programs.slice(0, 60).map((p) => (
+                {[...programs].sort(() => 0.5 - Math.random()).slice(0, 50).map((p) => (
                   <Link key={`${p.id}-${rep}`} to={`/programs/${p.id}`}
-                    className="flex-shrink-0 border-2 px-4 py-2.5 transition-all duration-150 hover:-translate-y-0.5 hover:border-current group"
-                    style={{ borderColor: 'var(--border-muted)', background: 'var(--card)', minWidth: '220px' }}
+                    className="flex-shrink-0 border-2 px-4 py-3 transition-all duration-150 hover:-translate-y-1 hover:border-current group flex items-center gap-3"
+                    style={{ borderColor: 'var(--border-muted)', background: 'var(--card)', minWidth: '240px' }}
                   >
-                    <p className="font-display text-[11px] tracking-wide leading-tight group-hover:underline" style={{ color: 'var(--fg)' }}>{p.name}</p>
-                    <p className="font-mono text-[9px] uppercase tracking-wider mt-0.5" style={{ color: 'var(--muted-text)' }}>{p.university} · {p.degree}</p>
+                    <span className="text-2xl flex-shrink-0">{programIcon(p.name, p.degree)}</span>
+                    <div className="min-w-0">
+                      <p className="font-display text-[11px] tracking-wide leading-tight group-hover:underline truncate" style={{ color: 'var(--fg)' }}>{p.name}</p>
+                      <p className="font-mono text-[9px] uppercase tracking-wider mt-0.5 truncate" style={{ color: 'var(--muted-text)' }}>{p.university} · {p.degree}</p>
+                    </div>
                   </Link>
                 ))}
               </div>

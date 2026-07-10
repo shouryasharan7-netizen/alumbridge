@@ -175,6 +175,14 @@ h1, h2, h3, h4, h5, h6 {
 /* ── Custom Cursor ── */
 /* The cursor is handled via a React component */
 
+/* ── Nav Link Button Hover ── */
+.nav-link:hover {
+  border-color: var(--border-color) !important;
+  background: var(--card) !important;
+  box-shadow: 2px 2px 0px 0px var(--border-color) !important;
+  color: var(--orange) !important;
+}
+
 /* ── Reference Code Style ── */
 .ref-code {
   font-family: 'JetBrains Mono', monospace;

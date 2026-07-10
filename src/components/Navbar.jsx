@@ -42,18 +42,21 @@ export default function Navbar() {
           </Link>
 
           {/* Desktop Links */}
-          <div className="hidden md:flex items-center gap-6">
+          <div className="hidden md:flex items-center gap-2">
             {links.map((link) => (
               <Link
                 key={link.to}
                 to={link.to}
-                className="text-sm font-bold transition-all duration-150"
+                className="nav-link px-4 py-2 border-2 transition-all duration-150 hover:-translate-y-0.5"
                 style={{
+                  fontFamily: "'Norwester', Impact, 'Arial Narrow', sans-serif",
+                  fontSize: '13px',
+                  letterSpacing: '0.5px',
+                  textTransform: 'uppercase',
                   color: isActive(link.to) ? 'var(--orange)' : 'var(--fg)',
-                  fontFamily: 'system-ui, sans-serif',
-                  fontSize: '14px',
-                  letterSpacing: '0',
-                  textTransform: 'none',
+                  borderColor: isActive(link.to) ? 'var(--border-color)' : 'transparent',
+                  background: isActive(link.to) ? 'var(--card)' : 'transparent',
+                  boxShadow: isActive(link.to) ? '2px 2px 0px 0px var(--border-color)' : 'none',
                 }}
               >
                 {link.label}
@@ -62,7 +65,7 @@ export default function Navbar() {
             <Link
               to="/programs"
               className="btn-brutal btn-primary text-[11px]"
-              style={{ padding: '8px 20px' }}
+              style={{ padding: '8px 20px', fontFamily: "'Norwester', Impact, 'Arial Narrow', sans-serif" }}
             >
               BROWSE PROGRAMS
             </Link>
@@ -109,10 +112,16 @@ export default function Navbar() {
                 key={link.to}
                 to={link.to}
                 onClick={() => setMobileOpen(false)}
-                className="block py-3 font-bold text-sm transition-colors"
+                className="block py-3 px-4 border-2 mb-2 transition-all duration-150"
                 style={{
+                  fontFamily: "'Norwester', Impact, 'Arial Narrow', sans-serif",
+                  fontSize: '14px',
+                  textTransform: 'uppercase',
+                  letterSpacing: '0.5px',
                   color: isActive(link.to) ? 'var(--orange)' : 'var(--fg)',
-                  fontFamily: 'system-ui, sans-serif',
+                  borderColor: isActive(link.to) ? 'var(--border-color)' : 'var(--border-muted)',
+                  background: isActive(link.to) ? 'var(--card)' : 'transparent',
+                  boxShadow: isActive(link.to) ? '2px 2px 0px 0px var(--border-color)' : 'none',
                 }}
               >
                 {link.label}
