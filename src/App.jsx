@@ -10,6 +10,7 @@ import ProgramProfile from './pages/ProgramProfile'
 import ComparePrograms from './pages/ComparePrograms'
 import AlumniConnect from './pages/AlumniConnect'
 import AlumniListing from './pages/AlumniListing'
+import Sitemap from './pages/Sitemap'
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
             <Route path="/compare" element={<ComparePrograms />} />
             <Route path="/alumni" element={<AlumniListing />} />
             <Route path="/alumni/:id" element={<AlumniConnect />} />
+            <Route path="/sitemap" element={<Sitemap />} />
           </Routes>
         </main>
         <Footer />

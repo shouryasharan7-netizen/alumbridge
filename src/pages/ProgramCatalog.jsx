@@ -1,19 +1,28 @@
 import { useState, useEffect } from 'react'
-import { Search, Filter, Globe, BookmarkCheck } from 'lucide-react'
+import { useSearchParams } from 'react-router-dom'
+import { Search, Filter, Globe, BookmarkCheck, ChevronDown } from 'lucide-react'
 import { programs } from '../data/programs'
 import ProgramCard from '../components/ProgramCard'
 
 const STORAGE_KEY = 'alumbridge_shortlist'
+const PAGE_SIZE = 18
 
 export default function ProgramCatalog() {
-  const [search, setSearch] = useState('')
+  const [searchParams, setSearchParams] = useSearchParams()
+  const [search, setSearch] = useState(() => searchParams.get('search') || '')
   const [filter, setFilter] = useState('all')
   const [shortlisted, setShortlisted] = useState([])
+  const [visibleCount, setVisibleCount] = useState(PAGE_SIZE)
 
   useEffect(() => {
     const saved = localStorage.getItem(STORAGE_KEY)
     if (saved) setShortlisted(JSON.parse(saved))
   }, [])
+
+  useEffect(() => {
+    const s = searchParams.get('search')
+    if (s && s !== search) setSearch(s)
+  }, [searchParams])
 
   const toggleShortlist = (id) => {
     setShortlisted((prev) => {
@@ -23,15 +32,16 @@ export default function ProgramCatalog() {
     })
   }
 
-  const countries = [...new Set(programs.map(p => p.country))]
-  const indiaCount = programs.filter(p => p.country === 'India').length
-  const intlCount = programs.length - indiaCount
+  const countries = [...new Set(programs.map(p => p.country))].sort()
 
   const filtered = programs.filter((p) => {
-    const matchesSearch =
-      p.name.toLowerCase().includes(search.toLowerCase()) ||
-      p.university.toLowerCase().includes(search.toLowerCase()) ||
-      p.country.toLowerCase().includes(search.toLowerCase())
+    const q = search.toLowerCase()
+    const matchesSearch = !q ||
+      p.name.toLowerCase().includes(q) ||
+      p.university.toLowerCase().includes(q) ||
+      p.country.toLowerCase().includes(q) ||
+      p.degree.toLowerCase().includes(q) ||
+      (p.placementStats?.topRecruiters || []).some(r => r.toLowerCase().includes(q))
     const matchesFilter =
       filter === 'all' ||
       (filter === 'shortlisted' && shortlisted.includes(p.id)) ||
@@ -41,17 +51,35 @@ export default function ProgramCatalog() {
     return matchesSearch && matchesFilter
   })
 
+  const visible = filtered.slice(0, visibleCount)
+  const hasMore = filtered.length > visibleCount
+
+  const handleSearch = (val) => {
+    setSearch(val)
+    setVisibleCount(PAGE_SIZE)
+    if (val) {
+      setSearchParams({ search: val })
+    } else {
+      setSearchParams({})
+    }
+  }
+
+  const handleFilter = (val) => {
+    setFilter(val)
+    setVisibleCount(PAGE_SIZE)
+  }
+
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
       {/* Header */}
       <div className="mb-8 animate-fade-in">
         <div className="inline-flex items-center gap-2 mb-3 border-2 px-3 py-1.5" style={{ borderColor: 'var(--border-color)', background: 'var(--card)', boxShadow: '2px 2px 0px 0px var(--border-color)' }}>
           <Globe className="w-3.5 h-3.5" style={{ color: 'var(--crimson)' }} />
-          <span className="font-mono text-[10px] font-bold uppercase tracking-widest" style={{ color: 'var(--fg)' }}>{countries.length} COUNTRIES REPRESENTED</span>
+          <span className="font-mono text-[10px] font-bold uppercase tracking-widest" style={{ color: 'var(--fg)' }}>{countries.length} COUNTRIES · {programs.length} PROGRAMS</span>
         </div>
         <h1 className="font-display text-3xl md:text-5xl tracking-wide mb-2" style={{ color: 'var(--fg)' }}>BROWSE PROGRAMS</h1>
         <p className="font-serif max-w-xl" style={{ color: 'var(--muted-text)' }}>
-          Explore undergraduate programs from top universities. Found something you like? <strong style={{ color: 'var(--fg)' }}>Shortlist it!</strong>
+          Explore {programs.length} undergraduate programs from {countries.length} countries. Found something you like? <strong style={{ color: 'var(--fg)' }}>Shortlist it!</strong>
         </p>
       </div>
 
@@ -60,9 +88,9 @@ export default function ProgramCatalog() {
         <div className="relative flex-1">
           <input
             type="text"
-            placeholder="Search by program, university, or country..."
+            placeholder="Search by program, university, country, or recruiter..."
             value={search}
-            onChange={(e) => setSearch(e.target.value)}
+            onChange={(e) => handleSearch(e.target.value)}
             className="brutal-input w-full pr-16"
           />
           <button
@@ -77,13 +105,13 @@ export default function ProgramCatalog() {
           <Filter className="w-4 h-4" style={{ color: 'var(--muted-text)' }} />
           <select
             value={filter}
-            onChange={(e) => setFilter(e.target.value)}
+            onChange={(e) => handleFilter(e.target.value)}
             className="brutal-input cursor-pointer"
           >
             <option value="all">All Programs ({programs.length})</option>
             <option value="shortlisted">Shortlisted ({shortlisted.length})</option>
-            <option value="india">India ({indiaCount})</option>
-            <option value="international">International ({intlCount})</option>
+            <option value="india">India ({programs.filter(p => p.country === 'India').length})</option>
+            <option value="international">International ({programs.filter(p => p.country !== 'India').length})</option>
           </select>
         </div>
       </div>
@@ -91,7 +119,7 @@ export default function ProgramCatalog() {
       {/* Country Pills */}
       <div className="flex flex-wrap gap-2 mb-6">
         <button
-          onClick={() => setFilter('all')}
+          onClick={() => handleFilter('all')}
           className="font-mono text-[10px] font-bold uppercase tracking-wider px-3 py-2 border-2 transition-all duration-150 hover:-translate-y-0.5"
           style={{
             background: filter === 'all' ? 'var(--fg)' : 'transparent',
@@ -109,7 +137,7 @@ export default function ProgramCatalog() {
           return (
             <button
               key={country}
-              onClick={() => setFilter(active ? 'all' : country.toLowerCase())}
+              onClick={() => handleFilter(active ? 'all' : country.toLowerCase())}
               className="font-mono text-[10px] font-bold uppercase tracking-wider px-3 py-2 border-2 transition-all duration-150 hover:-translate-y-0.5"
               style={{
                 background: active ? 'var(--crimson)' : 'transparent',
@@ -127,7 +155,7 @@ export default function ProgramCatalog() {
       {/* Results count */}
       <div className="flex items-center gap-3 mb-5">
         <span className="font-mono text-[10px] font-bold uppercase tracking-wider" style={{ color: 'var(--muted-text)' }}>
-          SHOWING {filtered.length} OF {programs.length}
+          SHOWING {visible.length} OF {filtered.length}
         </span>
         {shortlisted.length > 0 && (
           <span className="font-mono text-[10px] font-bold flex items-center gap-1" style={{ color: 'var(--orange)' }}>
@@ -137,25 +165,38 @@ export default function ProgramCatalog() {
       </div>
 
       {/* Grid */}
-      {filtered.length > 0 ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filtered.map((program, i) => (
-            <div key={program.id} className="animate-slide-up" style={{ animationDelay: `${i * 80}ms` }}>
-              <ProgramCard
-                program={program}
-                onShortlist={toggleShortlist}
-                isShortlisted={shortlisted.includes(program.id)}
-              />
+      {visible.length > 0 ? (
+        <>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {visible.map((program, i) => (
+              <div key={program.id} className={i < PAGE_SIZE ? 'animate-slide-up' : ''} style={i < PAGE_SIZE ? { animationDelay: `${i * 60}ms` } : {}}>
+                <ProgramCard
+                  program={program}
+                  onShortlist={toggleShortlist}
+                  isShortlisted={shortlisted.includes(program.id)}
+                />
+              </div>
+            ))}
+          </div>
+          {hasMore && (
+            <div className="text-center mt-10">
+              <button
+                onClick={() => setVisibleCount(prev => prev + PAGE_SIZE)}
+                className="btn-brutal btn-secondary text-[11px]"
+                style={{ padding: '12px 32px' }}
+              >
+                <ChevronDown className="w-4 h-4" /> LOAD MORE ({filtered.length - visibleCount} remaining)
+              </button>
             </div>
-          ))}
-        </div>
+          )}
+        </>
       ) : (
         <div className="brutal-card p-16 text-center" style={{ boxShadow: '4px 4px 0px 0px var(--border-color)' }}>
           <Search className="w-10 h-10 mx-auto mb-3" style={{ color: 'var(--subtle-text)' }} />
           <p className="font-display text-xl tracking-wide mb-1" style={{ color: 'var(--fg)' }}>NO PROGRAMS FOUND</p>
           <p className="font-serif text-sm" style={{ color: 'var(--muted-text)' }}>Try a different search term or clear your filters.</p>
           <button
-            onClick={() => { setSearch(''); setFilter('all') }}
+            onClick={() => { handleSearch(''); handleFilter('all') }}
             className="btn-brutal btn-primary mt-4 text-[10px]"
           >
             CLEAR ALL FILTERS

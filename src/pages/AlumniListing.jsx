@@ -1,13 +1,16 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { Users, Search, Check, ArrowRight, Briefcase, Globe } from 'lucide-react'
+import { Users, Search, Check, ArrowRight, Briefcase, Globe, ChevronDown } from 'lucide-react'
 import { alumni } from '../data/alumni'
 import { programs } from '../data/programs'
 import AlumniCard from '../components/AlumniCard'
 
+const PAGE_SIZE = 24
+
 export default function AlumniListing() {
   const [search, setSearch] = useState('')
   const [programFilter, setProgramFilter] = useState('')
+  const [visibleCount, setVisibleCount] = useState(PAGE_SIZE)
 
   const programNames = [...new Map(programs.map(p => [p.id, p.name])).entries()]
 
@@ -20,6 +23,9 @@ export default function AlumniListing() {
     const matchProgram = !programFilter || a.programId === programFilter
     return matchSearch && matchProgram
   })
+
+  const visible = filtered.slice(0, visibleCount)
+  const hasMore = filtered.length > visibleCount
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10 pb-16 animate-fade-in">
@@ -66,7 +72,7 @@ export default function AlumniListing() {
       {/* Results */}
       <div className="flex items-center justify-between mb-5">
         <p className="font-mono text-[10px] font-bold uppercase tracking-widest" style={{ color: 'var(--subtle-text)' }}>
-          SHOWING {filtered.length} OF {alumni.length}
+          SHOWING {visible.length} OF {filtered.length}
         </p>
         <div className="hidden sm:flex items-center gap-1 font-mono text-[9px]" style={{ color: 'var(--subtle-text)' }}>
           <Globe className="w-3 h-3" /> {new Set(alumni.map(a => programs.find(p => p.id === a.programId)?.country).filter(Boolean)).size} COUNTRIES
@@ -80,11 +86,24 @@ export default function AlumniListing() {
           <p className="font-serif text-sm mt-1" style={{ color: 'var(--muted-text)' }}>Try a different search or filter.</p>
         </div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {filtered.map((alum) => (
-            <AlumniCard key={alum.id} alum={alum} />
-          ))}
-        </div>
+        <>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {visible.map((alum) => (
+              <AlumniCard key={alum.id} alum={alum} />
+            ))}
+          </div>
+          {hasMore && (
+            <div className="text-center mt-10">
+              <button
+                onClick={() => setVisibleCount(prev => prev + PAGE_SIZE)}
+                className="btn-brutal btn-secondary text-[11px]"
+                style={{ padding: '12px 32px' }}
+              >
+                <ChevronDown className="w-4 h-4" /> LOAD MORE ({filtered.length - visibleCount} remaining)
+              </button>
+            </div>
+          )}
+        </>
       )}
     </div>
   )

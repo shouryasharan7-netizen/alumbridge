@@ -53,6 +53,8 @@ export default function Footer() {
               <li><Link to="/" className="hover:underline" style={{ color: 'var(--fg)' }}>Home</Link></li>
               <li><Link to="/programs" className="hover:underline" style={{ color: 'var(--fg)' }}>Browse Programs</Link></li>
               <li><Link to="/compare" className="hover:underline" style={{ color: 'var(--fg)' }}>Compare Programs</Link></li>
+              <li><Link to="/alumni" className="hover:underline" style={{ color: 'var(--fg)' }}>Alumni Network</Link></li>
+              <li><Link to="/sitemap" className="hover:underline" style={{ color: 'var(--fg)' }}>Site Map</Link></li>
             </ul>
           </div>
 
