@@ -1,5 +1,7 @@
 import { alumni } from '../data/alumni'
 import { programs } from '../data/programs'
+import { matchFAQ } from './faqs'
+import { askGemini, isGeminiAvailable } from '../services/gemini'
 
 // Pre-compute indexes for fast lookup
 const countries = [...new Set(programs.map(p => p.country))]
@@ -345,4 +347,31 @@ export function getQuickSuggestions() {
     "Cheapest programs?",
     "Programs in Canada",
   ]
+}
+
+/**
+ * Async response pipeline: FAQ match -> Gemini API -> rule-based fallback
+ * Returns { text, source } where source is 'faq' | 'ai' | 'system'
+ */
+export async function getChatbotResponseAsync(userMessage) {
+  // 1. Check FAQ database first
+  const faqMatch = matchFAQ(userMessage)
+  if (faqMatch) {
+    return {
+      text: `**${faqMatch.question}**\n\n${faqMatch.answer}`,
+      source: 'faq',
+      faqId: faqMatch.id,
+    }
+  }
+
+  // 2. Try Gemini API (if key configured)
+  if (isGeminiAvailable()) {
+    const geminiResponse = await askGemini(userMessage)
+    if (geminiResponse) {
+      return { text: geminiResponse, source: 'ai' }
+    }
+  }
+
+  // 3. Fallback to rule-based engine
+  return { text: getChatbotResponse(userMessage), source: 'system' }
 }

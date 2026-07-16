@@ -1,6 +1,8 @@
 import { useState, useRef, useEffect } from 'react'
-import { MessageCircle, X, Send, Bot, User, Sparkles } from 'lucide-react'
-import { getChatbotResponse, getQuickSuggestions } from '../data/chatEngine'
+import { MessageCircle, X, Send, Bot, User, Sparkles, Trash2 } from 'lucide-react'
+import { getChatbotResponse, getChatbotResponseAsync, getQuickSuggestions } from '../data/chatEngine'
+
+const CHAT_HISTORY_KEY = 'alumbridge_chat_history'
 
 function formatMessage(text) {
   let html = text
@@ -12,6 +14,16 @@ function formatMessage(text) {
   return html
 }
 
+function SourceBadge({ source }) {
+  if (source === 'faq') {
+    return <span className="font-mono text-[8px] font-bold px-1.5 py-0.5 border-2 inline-block mb-1" style={{ borderColor: 'var(--crimson)', color: 'var(--crimson)' }}>ALUMNI FAQ</span>
+  }
+  if (source === 'ai') {
+    return <span className="font-mono text-[8px] font-bold px-1.5 py-0.5 border-2 inline-block mb-1" style={{ borderColor: 'var(--orange)', color: 'var(--orange)' }}>AI POWERED</span>
+  }
+  return <span className="font-mono text-[8px] font-bold px-1.5 py-0.5 border-2 inline-block mb-1" style={{ borderColor: 'var(--muted-text)', color: 'var(--muted-text)' }}>SYSTEM</span>
+}
+
 export default function ChatBot() {
   const [isOpen, setIsOpen] = useState(false)
   const [messages, setMessages] = useState([])
@@ -20,10 +32,36 @@ export default function ChatBot() {
   const [hasWelcomed, setHasWelcomed] = useState(false)
   const [showBubble, setShowBubble] = useState(true)
 
+  // Load chat history from localStorage on mount
+  useEffect(() => {
+    try {
+      const saved = localStorage.getItem(CHAT_HISTORY_KEY)
+      if (saved) {
+        const parsed = JSON.parse(saved)
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          setMessages(parsed)
+          setHasWelcomed(true)
+        }
+      }
+    } catch {}
+  }, [])
+
+  // Save chat history to localStorage whenever messages change
+  useEffect(() => {
+    if (messages.length > 0) {
+      try {
+        // Only save last 50 messages to avoid localStorage bloat
+        const toSave = messages.slice(-50)
+        localStorage.setItem(CHAT_HISTORY_KEY, JSON.stringify(toSave))
+      } catch {}
+    }
+  }, [messages])
+
   useEffect(() => {
     const timer = setTimeout(() => setShowBubble(false), 5000)
     return () => clearTimeout(timer)
   }, [])
+
   const messagesEndRef = useRef(null)
   const inputRef = useRef(null)
 
@@ -31,30 +69,39 @@ export default function ChatBot() {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
   }
 
-  useEffect(() => {
-    scrollToBottom()
-  }, [messages, isTyping])
+  useEffect(() => { scrollToBottom() }, [messages, isTyping])
 
   useEffect(() => {
     if (isOpen && inputRef.current) inputRef.current.focus()
   }, [isOpen])
 
-  const sendMessage = (text) => {
+  const sendMessage = async (text) => {
     if (!text.trim()) return
-    const userMsg = { role: 'user', content: text.trim() }
+    const userMsg = { role: 'user', content: text.trim(), timestamp: Date.now() }
     setMessages(prev => [...prev, userMsg])
     setInput('')
     setIsTyping(true)
-    setTimeout(() => {
+
+    try {
+      const { text: responseText, source } = await getChatbotResponseAsync(text)
+      const botMsg = { role: 'bot', content: responseText, source: source || 'system', timestamp: Date.now() }
+      setMessages(prev => [...prev, botMsg])
+    } catch {
+      // Fallback to sync engine on any error
       const response = getChatbotResponse(text)
-      setMessages(prev => [...prev, { role: 'bot', content: response }])
-      setIsTyping(false)
-    }, 800 + Math.random() * 1200)
+      setMessages(prev => [...prev, { role: 'bot', content: response, source: 'system', timestamp: Date.now() }])
+    }
+    setIsTyping(false)
   }
 
   const handleSubmit = (e) => {
     e.preventDefault()
     sendMessage(input)
+  }
+
+  const clearHistory = () => {
+    setMessages([])
+    localStorage.removeItem(CHAT_HISTORY_KEY)
   }
 
   const handleOpen = () => {
@@ -63,7 +110,7 @@ export default function ChatBot() {
       setHasWelcomed(true)
       setIsTyping(true)
       setTimeout(() => {
-        setMessages([{ role: 'bot', content: getChatbotResponse('hello') }])
+        setMessages([{ role: 'bot', content: getChatbotResponse('hello'), source: 'system', timestamp: Date.now() }])
         setIsTyping(false)
       }, 1000)
     }
@@ -105,17 +152,29 @@ export default function ChatBot() {
                 <h3 className="font-display text-sm tracking-wide" style={{ color: 'var(--fg)' }}>ALUMBRIDGE AI</h3>
                 <p className="font-mono text-[9px] font-bold uppercase tracking-wider flex items-center gap-1" style={{ color: 'var(--subtle-text)' }}>
                   <span className="w-1.5 h-1.5 animate-pulse" style={{ background: '#059669' }}></span>
-                  TRAINED ON ALUMNI DATA
+                  FAQ + AI POWERED
                 </p>
               </div>
             </div>
-            <button
-              onClick={() => setIsOpen(false)}
-              className="w-8 h-8 flex items-center justify-center border-2 transition-all hover:-translate-y-0.5"
-              style={{ borderColor: 'var(--border-color)', background: 'var(--card)', color: 'var(--fg)' }}
-            >
-              <X className="w-4 h-4" />
-            </button>
+            <div className="flex items-center gap-2">
+              {messages.length > 0 && (
+                <button
+                  onClick={clearHistory}
+                  title="Clear chat history"
+                  className="w-8 h-8 flex items-center justify-center border-2 transition-all hover:-translate-y-0.5"
+                  style={{ borderColor: 'var(--border-color)', background: 'var(--card)', color: 'var(--muted-text)' }}
+                >
+                  <Trash2 className="w-3.5 h-3.5" />
+                </button>
+              )}
+              <button
+                onClick={() => setIsOpen(false)}
+                className="w-8 h-8 flex items-center justify-center border-2 transition-all hover:-translate-y-0.5"
+                style={{ borderColor: 'var(--border-color)', background: 'var(--card)', color: 'var(--fg)' }}
+              >
+                <X className="w-4 h-4" />
+              </button>
+            </div>
           </div>
 
           {/* Messages */}
@@ -129,6 +188,7 @@ export default function ChatBot() {
                   }
                 </div>
                 <div className="max-w-[80%] border-2 px-4 py-2.5 text-xs leading-relaxed" style={{ borderColor: 'var(--border-color)', background: 'var(--card)', color: 'var(--fg)', fontFamily: "'Norwester', Impact, 'Arial Narrow', sans-serif" }}>
+                  {msg.role === 'bot' && msg.source && <SourceBadge source={msg.source} />}
                   {msg.role === 'bot' ? (
                     <div dangerouslySetInnerHTML={{ __html: formatMessage(msg.content) }} />
                   ) : (
@@ -196,7 +256,7 @@ export default function ChatBot() {
               </button>
             </div>
             <p className="font-mono text-[8px] text-center mt-1.5" style={{ color: 'var(--subtle-text)' }}>
-              POWERED BY 25+ VERIFIED ALUMNI ACROSS 6 COUNTRIES
+              FAQ-FIRST · AI FALLBACK · 25+ VERIFIED ALUMNI
             </p>
           </form>
         </div>

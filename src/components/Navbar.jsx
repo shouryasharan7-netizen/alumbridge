@@ -1,12 +1,15 @@
-import { Link, useLocation } from 'react-router-dom'
-import { Menu, X, Sun, Moon, BookOpen } from 'lucide-react'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
+import { Menu, X, Sun, Moon, BookOpen, LogIn, LogOut, User } from 'lucide-react'
 import { useState } from 'react'
 import { useTheme } from '../context/ThemeContext'
+import { useAuth } from '../context/AuthContext'
 
 export default function Navbar() {
   const location = useLocation()
+  const navigate = useNavigate()
   const [mobileOpen, setMobileOpen] = useState(false)
   const { dark, toggle } = useTheme()
+  const { currentUser, logout } = useAuth()
 
   const links = [
     { to: '/', label: 'Home' },
@@ -70,6 +73,34 @@ export default function Navbar() {
             >
               BROWSE PROGRAMS
             </Link>
+
+            {/* Auth Buttons */}
+            {currentUser ? (
+              <div className="flex items-center gap-2">
+                <Link
+                  to={currentUser.role === 'alumni' ? '/alumni-dashboard' : '/dashboard'}
+                  className="flex items-center gap-1.5 px-3 py-2 border-2 transition-all hover:-translate-y-0.5"
+                  style={{ borderColor: 'var(--border-color)', background: 'var(--card)', boxShadow: '2px 2px 0px 0px var(--border-color)', fontFamily: "'Norwester', Impact, 'Arial Narrow', sans-serif", fontSize: '11px', color: 'var(--fg)' }}
+                >
+                  <User className="w-3.5 h-3.5" /> {currentUser.name?.split(' ')[0]?.toUpperCase()}
+                </Link>
+                <button
+                  onClick={() => { logout(); navigate('/') }}
+                  className="flex items-center gap-1 px-3 py-2 border-2 transition-all hover:-translate-y-0.5"
+                  style={{ borderColor: 'var(--border-color)', background: 'var(--card-alt)', boxShadow: '2px 2px 0px 0px var(--border-color)', fontFamily: "'Norwester', Impact, 'Arial Narrow', sans-serif", fontSize: '11px', color: 'var(--crimson)' }}
+                >
+                  <LogOut className="w-3.5 h-3.5" /> EXIT
+                </button>
+              </div>
+            ) : (
+              <Link
+                to="/login"
+                className="flex items-center gap-1.5 px-3 py-2 border-2 transition-all hover:-translate-y-0.5"
+                style={{ borderColor: 'var(--border-color)', background: 'var(--card)', boxShadow: '2px 2px 0px 0px var(--border-color)', fontFamily: "'Norwester', Impact, 'Arial Narrow', sans-serif", fontSize: '11px', color: 'var(--fg)' }}
+              >
+                <LogIn className="w-3.5 h-3.5" /> LOGIN
+              </Link>
+            )}
           </div>
 
           {/* Right controls */}
@@ -128,6 +159,38 @@ export default function Navbar() {
                 {link.label}
               </Link>
             ))}
+
+            {/* Mobile Auth Buttons */}
+            <div className="mt-3 pt-3 border-t-2" style={{ borderColor: 'var(--border-muted)' }}>
+              {currentUser ? (
+                <div className="flex flex-col gap-2">
+                  <Link
+                    to={currentUser.role === 'alumni' ? '/alumni-dashboard' : '/dashboard'}
+                    onClick={() => setMobileOpen(false)}
+                    className="flex items-center gap-2 py-3 px-4 border-2 transition-all"
+                    style={{ borderColor: 'var(--border-color)', background: 'var(--card)', boxShadow: '2px 2px 0px 0px var(--border-color)', fontFamily: "'Norwester', Impact, 'Arial Narrow', sans-serif", fontSize: '14px', color: 'var(--fg)', textTransform: 'uppercase' }}
+                  >
+                    <User className="w-4 h-4" /> {currentUser.name?.split(' ')[0]?.toUpperCase()} — DASHBOARD
+                  </Link>
+                  <button
+                    onClick={() => { logout(); setMobileOpen(false); navigate('/') }}
+                    className="flex items-center gap-2 py-3 px-4 border-2 transition-all"
+                    style={{ borderColor: 'var(--border-color)', background: 'var(--card-alt)', boxShadow: '2px 2px 0px 0px var(--border-color)', fontFamily: "'Norwester', Impact, 'Arial Narrow', sans-serif", fontSize: '14px', color: 'var(--crimson)', textTransform: 'uppercase' }}
+                  >
+                    <LogOut className="w-4 h-4" /> EXIT
+                  </button>
+                </div>
+              ) : (
+                <Link
+                  to="/login"
+                  onClick={() => setMobileOpen(false)}
+                  className="flex items-center gap-2 py-3 px-4 border-2 transition-all"
+                  style={{ borderColor: 'var(--border-color)', background: 'var(--card)', boxShadow: '2px 2px 0px 0px var(--border-color)', fontFamily: "'Norwester', Impact, 'Arial Narrow', sans-serif", fontSize: '14px', color: 'var(--fg)', textTransform: 'uppercase' }}
+                >
+                  <LogIn className="w-4 h-4" /> LOGIN
+                </Link>
+              )}
+            </div>
           </div>
         )}
       </nav>

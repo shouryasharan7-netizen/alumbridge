@@ -1,10 +1,12 @@
-import { BookOpen } from 'lucide-react'
+import { BookOpen, LogIn, LayoutDashboard } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { programs } from '../data/programs'
+import { useAuth } from '../context/AuthContext'
 
 const flags = [...new Set(programs.map(p => p.flag))]
 
 export default function Footer() {
+  const { currentUser } = useAuth()
   return (
     <footer className="noise-overlay" style={{ background: 'var(--bg)' }}>
       {/* Marquee band */}
@@ -56,6 +58,13 @@ export default function Footer() {
               <li><Link to="/projects" className="hover:underline" style={{ color: 'var(--fg)' }}>Student Projects</Link></li>
               <li><Link to="/mentor" className="hover:underline" style={{ color: 'var(--fg)' }}>Mentor Dashboard</Link></li>
               <li><Link to="/sitemap" className="hover:underline" style={{ color: 'var(--fg)' }}>Site Map</Link></li>
+              {currentUser ? (
+                <>
+                  <li><Link to={currentUser.role === 'alumni' ? '/alumni-dashboard' : '/dashboard'} className="hover:underline flex items-center gap-1" style={{ color: 'var(--crimson)' }}><LayoutDashboard className="w-3 h-3" /> DASHBOARD</Link></li>
+                </>
+              ) : (
+                <li><Link to="/login" className="hover:underline flex items-center gap-1" style={{ color: 'var(--crimson)' }}><LogIn className="w-3 h-3" /> LOGIN</Link></li>
+              )}
             </ul>
           </div>
 
