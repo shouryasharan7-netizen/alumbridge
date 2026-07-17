@@ -1,4 +1,5 @@
 import { Routes, Route } from 'react-router-dom'
+import { SpeedInsights } from '@vercel/speed-insights/react'
 import { ThemeProvider } from './context/ThemeContext'
 import { AuthProvider } from './context/AuthContext'
 import Navbar from './components/Navbar'
@@ -39,6 +40,7 @@ function App() {
           </main>
           <Footer />
           <ChatBot />
+          <SpeedInsights />
         </div>
       </AuthProvider>
     </ThemeProvider>
